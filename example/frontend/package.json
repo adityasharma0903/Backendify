@@ -1,0 +1,15 @@
+{
+  "name": "example-frontend",
+  "version": "1.0.0",
+  "description": "Example frontend project to test Backendify",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "axios": "^1.6.0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "backendify",
+  "version": "1.0.0",
+  "description": "Hybrid Backend Generator - Offline Rule-Based Engine (AI Optional)",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "backendify": "./cli.js"
+  },
+  "scripts": {
+    "start": "node cli.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "backend",
+    "generator",
+    "cli",
+    "express",
+    "mongoose",
+    "automation"
+  ],
+  "author": "Aditya",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.0.0",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.1",
+    "axios": "^1.6.0",
+    "inquirer": "^9.0.0",
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "glob": "^10.3.10"
+  }
+}
