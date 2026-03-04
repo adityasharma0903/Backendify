@@ -1,15 +1,14 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import helmet from 'helmet';
 import mongoose from 'mongoose';
 import errorHandler from './middleware/errorHandler.js';
 import requestLogger from './middleware/requestLogger.js';
 
-dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/<DB_NAME>';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/__DB_NAME__';
 
 // ============ MIDDLEWARE ============
 app.use(express.json({ limit: '10mb' }));
@@ -18,7 +17,7 @@ app.use(cors());
 app.use(requestLogger);
 
 // ============ ROUTES ============
-<ROUTES>
+// __ROUTES__
 
 // ============ HEALTH CHECK ============
 app.get('/health', (req, res) => {

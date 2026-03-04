@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const schema = new mongoose.Schema(
   {
-<FIELDS>
+/* __FIELDS__ */
     metadata: {
       createdBy: String,
       updatedBy: String,
@@ -11,7 +11,7 @@ const schema = new mongoose.Schema(
   },
   { 
     timestamps: true,
-    collection: '<COLLECTION_NAME>'
+    collection: '__COLLECTION_NAME__'
   }
 );
 
@@ -40,6 +40,6 @@ schema.statics.findByIdAndDelete = async function(id) {
   return this.findByIdAndRemove(id);
 };
 
-const <MODEL_NAME> = mongoose.model('<MODEL_NAME>', schema);
+const __MODEL_NAME__ = mongoose.model('__MODEL_NAME__', schema);
 
-export default <MODEL_NAME>;
+export default __MODEL_NAME__;

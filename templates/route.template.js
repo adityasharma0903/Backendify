@@ -1,17 +1,17 @@
 import express from 'express';
-import <MODEL_NAME> from '../models/<MODEL_NAME>.model.js';
+import __MODEL_NAME__ from '../models/__MODEL_NAME__.model.js';
 
 const router = express.Router();
 
 // ========== GET - Fetch All / By Filter ==========
 router.get('/', async (req, res, next) => {
   try {
-    const data = await <MODEL_NAME>.find().limit(100);
+    const data = await __MODEL_NAME__.find().limit(100);
     
     if (!data || data.length === 0) {
       return res.status(404).json({
         success: false,
-        message: '<MODEL_NAME> not found'
+        message: '__MODEL_NAME__ not found'
       });
     }
 
@@ -28,12 +28,12 @@ router.get('/', async (req, res, next) => {
 // ========== GET SINGLE ==========
 router.get('/:id', async (req, res, next) => {
   try {
-    const data = await <MODEL_NAME>.findById(req.params.id);
+    const data = await __MODEL_NAME__.findById(req.params.id);
     
     if (!data) {
       return res.status(404).json({
         success: false,
-        message: '<MODEL_NAME> not found'
+        message: '__MODEL_NAME__ not found'
       });
     }
 
@@ -49,12 +49,12 @@ router.get('/:id', async (req, res, next) => {
 // ========== POST - Create New ==========
 router.post('/', async (req, res, next) => {
   try {
-    const newData = new <MODEL_NAME>(req.body);
+    const newData = new __MODEL_NAME__(req.body);
     const saved = await newData.save();
 
     res.status(201).json({
       success: true,
-      message: '<MODEL_NAME> created successfully',
+      message: '__MODEL_NAME__ created successfully',
       data: saved
     });
   } catch (error) {
@@ -72,7 +72,7 @@ router.post('/', async (req, res, next) => {
 // ========== PUT - Update Entire Document ==========
 router.put('/:id', async (req, res, next) => {
   try {
-    const updated = await <MODEL_NAME>.findByIdAndUpdate(
+    const updated = await __MODEL_NAME__.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
@@ -81,13 +81,13 @@ router.put('/:id', async (req, res, next) => {
     if (!updated) {
       return res.status(404).json({
         success: false,
-        message: '<MODEL_NAME> not found'
+        message: '__MODEL_NAME__ not found'
       });
     }
 
     res.status(200).json({
       success: true,
-      message: '<MODEL_NAME> updated successfully',
+      message: '__MODEL_NAME__ updated successfully',
       data: updated
     });
   } catch (error) {
@@ -105,18 +105,18 @@ router.put('/:id', async (req, res, next) => {
 // ========== DELETE ==========
 router.delete('/:id', async (req, res, next) => {
   try {
-    const deleted = await <MODEL_NAME>.findByIdAndDelete(req.params.id);
+    const deleted = await __MODEL_NAME__.findByIdAndDelete(req.params.id);
 
     if (!deleted) {
       return res.status(404).json({
         success: false,
-        message: '<MODEL_NAME> not found'
+        message: '__MODEL_NAME__ not found'
       });
     }
 
     res.status(200).json({
       success: true,
-      message: '<MODEL_NAME> deleted successfully',
+      message: '__MODEL_NAME__ deleted successfully',
       data: deleted
     });
   } catch (error) {
