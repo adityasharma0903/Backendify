@@ -18,7 +18,7 @@ program
 program
   .command('generate [path]')
   .description('🚀 Generate backend (default mode)')
-  .option('--auto-connect', 'Auto-connect frontend & backend after generation')
+  .option('--no-auto-connect', 'Skip auto-connect after generation')
   .action(async (projectPath, options) => {
     try {
       const questions = [
@@ -38,7 +38,7 @@ program
       if (answers.mode === 'offline') {
         await offlineMode(projectPath || process.cwd());
         
-        // Auto-connect if flag is set
+        // Auto-connect by default (can be skipped with --no-auto-connect)
         if (options.autoConnect) {
           console.log(chalk.cyan('\n🔗 Auto-connecting frontend & backend...\n'));
           await connectFrontendBackend(projectPath || process.cwd());
@@ -76,11 +76,10 @@ program.parse(process.argv);
 if (!process.argv.slice(2).length) {
   program.outputHelp();
   console.log(chalk.cyan('\n💡 Quick Start:\n'));
-  console.log(chalk.white('  Option 1 (Separate commands):'));
-  console.log(chalk.gray('    backendify generate                    # Step 1: Generate backend'));
-  console.log(chalk.gray('    backendify connect                     # Step 2: Auto-connect & fix\n'));
-  console.log(chalk.white('  Option 2 (One command):'));
-  console.log(chalk.gray('    backendify generate --auto-connect     # Generate + Auto-connect\n'));
+  console.log(chalk.white('  Option 1 (Recommended):'));
+  console.log(chalk.gray('    backendify generate                    # Generate + Auto-connect\n'));
+  console.log(chalk.white('  Option 2 (Skip auto-connect):'));
+  console.log(chalk.gray('    backendify generate --no-auto-connect  # Generate only\n'));
   console.log(chalk.white('  Option 3 (Just connect):'));
   console.log(chalk.gray('    backendify connect [path]              # Auto-connect existing project\n'));
 }

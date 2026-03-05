@@ -27,7 +27,10 @@
     "ora": "^7.0.1",
     "axios": "^1.6.0",
     "inquirer": "^9.0.0",
-    "glob": "^10.3.10"
+    "glob": "^10.3.10",
+    "fast-glob": "^3.3.3",
+    "@babel/parser": "^7.27.7",
+    "@babel/traverse": "^7.27.7"
   },
   "devDependencies": {
     "glob": "^10.3.10"

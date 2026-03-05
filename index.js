@@ -12,4 +12,5 @@
 
 export { offlineMode } from './lib/modes/offline.js';
 export { runDoctor } from './lib/utils/doctor.js';
-export { scanFrontendCode, generateRoutesFromAPICalls } from './lib/scanner/frontendScanner.js';
+export { scanFrontendCode, generateRoutesFromAPICalls, buildHybridIR } from './lib/scanner/frontendScanner.js';
+export * from './core/index.js';

@@ -14,7 +14,7 @@ import rateLimit from 'express-rate-limit';
 import chalk from 'chalk';
 
 // Import database
-import { connectDatabase, isDatabaseConnected } from './config/database.js';
+import { connectDatabase, disconnectDatabase, isDatabaseConnected } from './config/database.js';
 
 // Import middleware
 import requestLogger from './middleware/requestLogger.js';
@@ -77,6 +77,17 @@ app.use(cacheMiddleware(300)); // 5 minutes cache
 
 // Health Check & API Info
 app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    environment: NODE_ENV,
+    database: isDatabaseConnected() ? 'Connected' : 'Disconnected',
+    version: API_VERSION
+  });
+});
+
+app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
     uptime: process.uptime(),

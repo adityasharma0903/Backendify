@@ -26,13 +26,16 @@ app.use(requestLogger);
 // __ROUTES__
 
 // ============ HEALTH CHECK ============
-app.get('/health', (req, res) => {
+const healthHandler = (req, res) => {
   res.status(200).json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
     database: mongoose.connection.readyState ? 'Connected' : 'Disconnected'
   });
-});
+};
+
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
 
 // ============ ERROR HANDLER ============
 app.use(errorHandler);
@@ -68,7 +71,8 @@ async function startServer() {
   app.listen(PORT, () => {
     console.log(`\n🚀 Backend Server Running`);
     console.log(`   URL: http://localhost:${PORT}`);
-    console.log(`   Health: http://localhost:${PORT}/health\n`);
+    console.log(`   Health: http://localhost:${PORT}/health`);
+    console.log(`   API Health: http://localhost:${PORT}/api/health\n`);
   });
 }
 
