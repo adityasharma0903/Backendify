@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node cli.js",
-    "test": "node test.js"
+    "test": "node test.js",
+    "test:p0": "node tests/p0-regression.test.js"
   },
   "keywords": [
     "backend",

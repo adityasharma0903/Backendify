@@ -35,8 +35,8 @@ npm install -g backendify
 ## Quick Start (2 Commands!)
 
 ```bash
-# 1️⃣ Generate production backend
-backendify generate --auto-connect
+# 1️⃣ Generate production backend (auto-connect is default)
+backendify generate
 
 # 2️⃣ Start backend
 cd backend && npm run dev
@@ -45,6 +45,25 @@ cd backend && npm run dev
 ```
 
 **See [QUICK_START_v2.md](./QUICK_START_v2.md) for full guide!**
+
+## P0/P1 Stable Workflow (Recommended)
+
+```bash
+# P0: Run regression checks for scanner/connect/update flow
+npm run test:p0
+
+# P1: Generate and connect in one stable flow
+backendify generate
+backendify connect .
+
+# Run backend
+cd backend
+npm run dev
+```
+
+Frontend tip:
+- Keep frontend base URL as `http://localhost:5000` (without `/api`)
+- Call endpoints as `/api/...` from the app
 
 ## v2.0 Features
 
@@ -108,11 +127,20 @@ backend/
 ## Commands
 
 ```bash
-# Generate backend
+# Generate backend (auto-connect by default)
 backendify generate [path]
+
+# Generate without auto-connect
+backendify generate --no-auto-connect [path]
+
+# Run connect pass explicitly
+backendify connect [path]
 
 # System health check
 backendify doctor
+
+# P0 regression tests
+npm run test:p0
 ```
 
 ## How It Works
@@ -272,11 +300,13 @@ npx backendify generate
 - [x] Offline Mode (Rule-Based)
 - [x] Auto-route generation
 - [x] Auto-model generation
+- [x] Testing setup (P0 Regression Suite)
+- [x] Frontend-Backend Auto-Connection (Connect Mode)
+- [x] Advanced URL/Response Parsing Fixes
 - [ ] Online Mode (AI-Powered)
 - [ ] TypeScript support
 - [ ] Database options (PostgreSQL, MySQL)
 - [ ] GraphQL support
-- [ ] Testing setup (Jest/Mocha)
 - [ ] Docker support
 - [ ] CI/CD pipeline generation
 
@@ -307,10 +337,6 @@ npm install --legacy-peer-deps
 ## Contributing
 
 Suggestions and contributions are welcome!
-
-## License
-
-MIT
 
 ---
 
