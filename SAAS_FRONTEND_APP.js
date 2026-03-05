@@ -86,7 +86,7 @@ function App() {
           )}
         </div>
         <div className="user-menu">
-          <span>👤 {user.name} ({user.role})</span>
+          <span>👤 {user.firstName} {user.lastName} ({user.role || 'student'})</span>
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
       </nav>
@@ -134,7 +134,8 @@ function LoginPage({ onLogin, onSwitchToSignup }) {
     setError('');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
+      const API_BASE_URL = 'http://localhost:3001/api/v1';
+      const response = await fetch(`${API_BASE_URL}/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -142,13 +143,13 @@ function LoginPage({ onLogin, onSwitchToSignup }) {
 
       const data = await response.json();
 
-      if (response.ok) {
-        onLogin(data.user, data.token);
+      if (response.ok && data.success) {
+        onLogin(data.data, data.token);
       } else {
-        setError(data.message || 'Login failed');
+        setError(data.error || 'Login failed');
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      setError('Network error. Backend not running - start it with: npm start in event-management-backend dir');
     } finally {
       setLoading(false);
     }
@@ -157,14 +158,14 @@ function LoginPage({ onLogin, onSwitchToSignup }) {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>🔐 Login to SaaS Platform</h2>
+        <h2>🔐 Login to Event Management</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit" disabled={loading}>{loading ? 'Logging in...' : 'Login'}</button>
         </form>
-        <p>Don't have an account? <button onClick={onSwitchToSignup} className="link-btn">Sign Up</button></p>
+        <p>New user? <button onClick={onSwitchToSignup} className="link-btn">Create Account</button></p>
       </div>
     </div>
   );
@@ -173,36 +174,51 @@ function LoginPage({ onLogin, onSwitchToSignup }) {
 // ===== SIGNUP PAGE =====
 function SignupPage({ onSignup, onSwitchToLogin }) {
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
-    company: '',
-    role: 'user'
+    confirmPassword: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    setLoading(true);
+
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/signup`, {
+      const API_BASE_URL = 'http://localhost:3001/api/v1';
+      const { confirmPassword, ...signupData } = formData;
+      
+      const response = await fetch(`${API_BASE_URL}/users/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(signupData)
       });
 
       const data = await response.json();
 
-      if (response.ok) {
-        onSignup(data.user, data.token);
+      if (response.ok && data.success) {
+        onSignup(data.data, data.token);
       } else {
-        setError(data.message || 'Signup failed');
+        setError(data.error || 'Signup failed');
       }
     } catch (err) {
-      setError('Network error. Please try again.');
+      setError('Network error. Backend not running - start it with: npm start in event-management-backend dir');
     } finally {
       setLoading(false);
     }
@@ -210,14 +226,65 @@ function SignupPage({ onSignup, onSwitchToLogin }) {
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
+      <div className="auth-card auth-card-signup">
         <h2>🚀 Create Account</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} required />
-          <input type="email" placeholder="Email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} required />
-          <input type="password" placeholder="Password" value={formData.password} onChange={(e) => setFormData({...formData, password: e.target.value})} required />
-          <input type="text" placeholder="Company Name" value={formData.company} onChange={(e) => setFormData({...formData, company: e.target.value})} />
+          <input 
+            type="text" 
+            name="username" 
+            placeholder="Username" 
+            value={formData.username} 
+            onChange={handleChange} 
+            required 
+          />
+          <input 
+            type="text" 
+            name="firstName" 
+            placeholder="First Name" 
+            value={formData.firstName} 
+            onChange={handleChange} 
+            required 
+          />
+          <input 
+            type="text" 
+            name="lastName" 
+            placeholder="Last Name" 
+            value={formData.lastName} 
+            onChange={handleChange} 
+            required 
+          />
+          <input 
+            type="email" 
+            name="email" 
+            placeholder="Email" 
+            value={formData.email} 
+            onChange={handleChange} 
+            required 
+          />
+          <input 
+            type="password" 
+            name="password" 
+            placeholder="Password" 
+            value={formData.password} 
+            onChange={handleChange} 
+            required 
+          />
+          <input 
+            type="password" 
+            name="confirmPassword" 
+            placeholder="Confirm Password" 
+            value={formData.confirmPassword} 
+            onChange={handleChange} 
+            required 
+          />
+          <button type="submit" disabled={loading}>{loading ? 'Creating account...' : 'Sign Up'}</button>
+        </form>
+        <p>Already have an account? <button onClick={onSwitchToLogin} className="link-btn">Login</button></p>
+      </div>
+    </div>
+  );
+}
           <button type="submit" disabled={loading}>{loading ? 'Creating Account...' : 'Sign Up'}</button>
         </form>
         <p>Already have an account? <button onClick={onSwitchToLogin} className="link-btn">Login</button></p>

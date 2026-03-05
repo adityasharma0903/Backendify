@@ -1,4 +1,7 @@
 import express from 'express';
+import { body, param } from 'express-validator';
+import { validateErrors } from '../middleware/validation.js';
+import { authenticateToken } from '../middleware/auth.js';
 import __MODEL_NAME__ from '../models/__MODEL_NAME__.model.js';
 
 const router = express.Router();
@@ -47,7 +50,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // ========== POST - Create New ==========
-router.post('/', async (req, res, next) => {
+router.post('/', authenticateToken, async (req, res, next) => {
   try {
     const newData = new __MODEL_NAME__(req.body);
     const saved = await newData.save();
@@ -70,7 +73,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // ========== PUT - Update Entire Document ==========
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', authenticateToken, async (req, res, next) => {
   try {
     const updated = await __MODEL_NAME__.findByIdAndUpdate(
       req.params.id,

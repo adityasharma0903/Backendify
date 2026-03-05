@@ -17,6 +17,12 @@ app.use(cors());
 app.use(requestLogger);
 
 // ============ ROUTES ============
+// Routes should be registered with /api prefix in __ROUTES__
+// Example: app.use('/api/users', usersRoutes);
+// 
+// Frontend Configuration:
+//   ✅ CORRECT:   VITE_API_URL = http://localhost:5000
+//   ❌ WRONG:     VITE_API_URL = http://localhost:5000/api
 // __ROUTES__
 
 // ============ HEALTH CHECK ============

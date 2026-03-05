@@ -1,127 +1,231 @@
 import express from 'express';
-import Product from '../models/Product.model.js';
+import { query, body, param } from 'express-validator';
+import { validateErrors } from '../middleware/validation.js';
+import { PaginationHelper } from '../utils/pagination.js';
+import { ResponseHelper } from '../utils/helper.js';
+import Product from '../models/Product.js';
 
 const router = express.Router();
 
-// ========== GET - Fetch All / By Filter ==========
-router.get('/', async (req, res, next) => {
-  try {
-    const data = await Product.find().limit(100);
-    
-    if (!data || data.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
-    }
+// ============================================================
+// GET ALL - WITH PAGINATION, FILTERING, SORTING, SEARCH
+// ============================================================
+router.get(
+  '/',
+  [
+    query('page').optional().isInt({ min: 1 }).toInt(),
+    query('limit').optional().isInt({ min: 1, max: 100 }).toInt(),
+    query('sort').optional().isString(),
+    query('search').optional().isString().trim(),
+    validateErrors
+  ],
+  async (req, res, next) => {
+    try {
+      const { page = 1, limit = 10, skip = 0 } = PaginationHelper.getPaginationParams(req);
+      const sort = PaginationHelper.getSortObject(req.query.sort);
 
-    res.status(200).json({
-      success: true,
-      count: data.length,
-      data
-    });
-  } catch (error) {
-    next(error);
+      let query = {};
+
+      // Apply search filter
+      if (req.query.search) {
+        query = PaginationHelper.buildSearchQuery(req.query.search, ['title', 'price', 'description']);
+      }
+
+      // Apply additional filters
+      const filters = PaginationHelper.buildFilterQuery(req, ['category']);
+      query = { ...query, ...filters };
+
+      // Exclude deleted items by default
+      query.isDeleted = false;
+
+      // Execute paginated query
+      const result = await PaginationHelper.paginate(Product, query, { page, limit, skip, sort });
+
+      return ResponseHelper.paginated(res, result.data, result.pagination, 'products loaded successfully');
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-// ========== GET SINGLE ==========
-router.get('/:id', async (req, res, next) => {
-  try {
-    const data = await Product.findById(req.params.id);
-    
-    if (!data) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
+// ============================================================
+// GET BY ID
+// ============================================================
+router.get(
+  '/:id',
+  [param('id').isMongoId(), validateErrors],
+  async (req, res, next) => {
+    try {
+      const item = await Product.findOne({ _id: req.params.id, isDeleted: false });
+
+      if (!item) {
+        return ResponseHelper.notFound(res, 'Product');
+      }
+
+      return ResponseHelper.success(res, item, 'Item retrieved successfully');
+    } catch (error) {
+      next(error);
     }
-
-    res.status(200).json({
-      success: true,
-      data
-    });
-  } catch (error) {
-    next(error);
   }
-});
+);
 
-// ========== POST - Create New ==========
-router.post('/', async (req, res, next) => {
-  try {
-    const newData = new Product(req.body);
-    const saved = await newData.save();
+// ============================================================
+// CREATE
+// ============================================================
+router.post(
+  '/',
+  [body('title').isString().isLength({ min: 2, max: 255 }),
+    body('price').optional().isFloat({ min: 0 }), validateErrors],
+  async (req, res, next) => {
+    try {
+      const newItem = new Product(req.body);
+      const saved = await newItem.save();
 
-    res.status(201).json({
-      success: true,
-      message: 'Product created successfully',
-      data: saved
-    });
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation Error',
-        errors: Object.values(error.errors).map(e => e.message)
-      });
+      return ResponseHelper.success(res, saved, 'Product created successfully', 201);
+    } catch (error) {
+      if (error.name === 'ValidationError') {
+        const errors = Object.values(error.errors).map(e => e.message);
+        return ResponseHelper.validationError(res, errors);
+      }
+      if (error.code === 11000) {
+        return ResponseHelper.error(res, 'Duplicate value for unique field', [], 409);
+      }
+      next(error);
     }
-    next(error);
   }
-});
+);
 
-// ========== PUT - Update Entire Document ==========
-router.put('/:id', async (req, res, next) => {
-  try {
-    const updated = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+// ============================================================
+// UPDATE (PUT - Full)
+// ============================================================
+router.put(
+  '/:id',
+  [
+    param('id').isMongoId(),
+    body('title').isString().isLength({ min: 2, max: 255 }),
+    body('price').optional().isFloat({ min: 0 }),
+    validateErrors
+  ],
+  async (req, res, next) => {
+    try {
+      const updated = await Product.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true, runValidators: true }
+      );
 
-    if (!updated) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
+      if (!updated) {
+        return ResponseHelper.notFound(res, 'Product');
+      }
+
+      return ResponseHelper.success(res, updated, 'Product updated successfully');
+    } catch (error) {
+      if (error.name === 'ValidationError') {
+        const errors = Object.values(error.errors).map(e => e.message);
+        return ResponseHelper.validationError(res, errors);
+      }
+      next(error);
     }
-
-    res.status(200).json({
-      success: true,
-      message: 'Product updated successfully',
-      data: updated
-    });
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation Error',
-        errors: Object.values(error.errors).map(e => e.message)
-      });
-    }
-    next(error);
   }
-});
+);
 
-// ========== DELETE ==========
-router.delete('/:id', async (req, res, next) => {
-  try {
-    const deleted = await Product.findByIdAndDelete(req.params.id);
+// ============================================================
+// PARTIAL UPDATE (PATCH)
+// ============================================================
+router.patch(
+  '/:id',
+  [param('id').isMongoId(), validateErrors],
+  async (req, res, next) => {
+    try {
+      // Don't allow ID changes
+      delete req.body._id;
+      delete req.body.createdAt;
 
-    if (!deleted) {
-      return res.status(404).json({
-        success: false,
-        message: 'Product not found'
-      });
+      const updated = await Product.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true, runValidators: true }
+      );
+
+      if (!updated) {
+        return ResponseHelper.notFound(res, 'Product');
+      }
+
+      return ResponseHelper.success(res, updated, 'Partial update successful');
+    } catch (error) {
+      next(error);
     }
-
-    res.status(200).json({
-      success: true,
-      message: 'Product deleted successfully',
-      data: deleted
-    });
-  } catch (error) {
-    next(error);
   }
-});
+);
+
+// ============================================================
+// DELETE (Soft Delete)
+// ============================================================
+router.delete(
+  '/:id',
+  [param('id').isMongoId(), validateErrors],
+  async (req, res, next) => {
+    try {
+      const deleted = await Product.softDelete(req.params.id);
+
+      if (!deleted) {
+        return ResponseHelper.notFound(res, 'Product');
+      }
+
+      return ResponseHelper.success(res, deleted, 'Product deleted successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// ============================================================
+// BULK OPERATIONS
+// ============================================================
+
+// Bulk Create
+router.post(
+  '/bulk/create',
+  [body('items').isArray({ min: 1 }), validateErrors],
+  async (req, res, next) => {
+    try {
+      const items = await Product.insertMany(req.body.items);
+      return ResponseHelper.success(res, items, `Created ${items.length} items`, 201);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Bulk Delete
+router.delete(
+  '/bulk/delete',
+  [body('ids').isArray({ min: 1 }), validateErrors],
+  async (req, res, next) => {
+    try {
+      const result = await Product.deleteMany({ _id: { $in: req.body.ids } });
+      return ResponseHelper.success(res, result, `Deleted ${result.deletedCount} items`);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// ============================================================
+// STATISTICS
+// ============================================================
+router.get(
+  '/stats/summary',
+  async (req, res, next) => {
+    try {
+      const total = await Product.countDocuments({ isDeleted: false });
+      const recent = await Product.find({ isDeleted: false }).sort({ createdAt: -1 }).limit(5);
+
+      return ResponseHelper.success(res, { total, recent }, 'Statistics retrieved');
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export default router;

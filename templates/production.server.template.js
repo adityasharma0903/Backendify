@@ -116,6 +116,20 @@ app.get('/api/status', (req, res) => {
 // __ROUTES__
 
 // ============================================
+// IMPORTANT: API URL Configuration
+// ============================================
+// Routes are registered with /api prefix (e.g., app.use('/api/users', usersRoutes))
+// Frontend VITE_API_URL should be: http://localhost:5000 (WITHOUT /api)
+// Frontend will then call: http://localhost:5000/api/users
+// 
+// ❌ WRONG: VITE_API_URL = http://localhost:5000/api
+// This would result in: http://localhost:5000/api/api/users (404!)
+// 
+// ✅ CORRECT: VITE_API_URL = http://localhost:5000
+// This results in: http://localhost:5000/api/users (✓ works!)
+// ============================================
+
+// ============================================
 // 404 ERROR HANDLER
 // ============================================
 app.use((req, res) => {
