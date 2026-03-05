@@ -44,6 +44,181 @@ cd backend && npm run dev
 # ✅ Your backend is running on http://localhost:5000
 ```
 
+### Complete Workflow:
+
+```bash
+# Initial generation
+backendify generate
+
+# Start backend
+cd backend && npm run dev
+
+# Later: Sync backend when frontend changes
+backendify sync
+
+# Test performance & scalability
+backendify benchmark
+```
+
+**See [QUICK_START_v2.md](./QUICK_START_v2.md) for full guide!**
+
+## 🎯 Smart API Generation (NEW!)
+
+**Generate full-stack APIs from your frontend code patterns - No API calls needed!**
+
+Perfect for when you're building the frontend first and haven't added API calls yet!
+
+```bash
+backendify generate-api
+```
+
+### How It Works:
+
+**Before:** Your frontend has data structures but no API integration:
+```jsx
+function ProductList() {
+  const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
+  
+  // TODO: Add API calls later
+  
+  return (
+    <div>
+      {products.map(product => (
+        <div>{product.name}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+**After running `backendify generate-api`:**
+
+1. ✅ **Detects Resources** - Scans for state variables (`products`, `orders`, `users`)
+2. ✅ **Generates Backend** - Creates models, routes, controllers  
+3. ✅ **Generates API Clients** - Creates `src/api/product.js`, etc.
+4. ✅ **Injects API Calls** - Adds fetch logic to your components
+
+**Result - Your code is auto-updated:**
+```jsx
+import { getAllProducts } from '../api/product.js';
+
+function ProductList() {
+  const [products, setProducts] = useState([]);
+  
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getAllProducts();
+        setProducts(data.data || data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchProducts();
+  }, []);
+  
+  return <div>{products.map(product => <div>{product.name}</div>)}</div>;
+}
+```
+
+### Detection Patterns:
+
+Backendify automatically detects resources from:
+- ✅ `const [products, setProducts] = useState([])`
+- ✅ `products.map(product => ...)`
+- ✅ `<input name="productName" />`
+- ✅ `useEffect(() => { /* fetch products */ })`
+
+### What Gets Generated:
+
+**Backend** (full CRUD):
+- ✅ `backend/models/Product.js`
+- ✅ `backend/routes/products.routes.js`
+- ✅ `backend/server.js` (auto-updated)
+- ✅ `backend/.env` (auto-generated from template)
+- ✅ `backend/middleware/validation.js` (auto-generated)
+- ✅ `backend/utils/pagination.js` and `backend/utils/helper.js` (auto-generated)
+
+**Frontend** (API clients):
+- ✅ `src/api/product.js` (getAllProducts, getProductById, createProduct, etc.)
+- ✅ `src/api/index.js`
+
+### Skip Code Injection:
+
+```bash
+# Generate APIs without modifying frontend files
+backendify generate-api --no-inject
+```
+
+Then manually use the generated API clients in your code.
+
+## 🔄 Sync Backend with Frontend Changes
+
+After initial backend generation, keep it in sync with frontend updates:
+
+```bash
+# Scan frontend for new APIs and update backend
+backendify sync
+
+# ✅ Adds new models/routes for new resources
+# ✅ Adds missing fields to existing models
+# ✅ Preserves custom backend logic
+# ✅ No overwriting of your code!
+```
+
+**Use Case:** Added new API calls in frontend? Just run `backendify sync` to update backend automatically!
+
+## ⚡ Performance Testing & Scalability
+
+Test your backend under load and get optimization recommendations:
+
+```bash
+# Run scalability tests
+backendify benchmark
+
+# Custom load levels
+backendify benchmark --levels 10,100,1000,10000
+
+# Startup growth simulation
+backendify benchmark --startup-mode
+```
+
+### What You Get:
+
+📊 **Scalability Score** (0-100)  
+📈 **Performance at Different Load Levels** (10, 100, 1k, 10k concurrent users)  
+🔴 **Bottleneck Detection** (slow APIs, database issues)  
+💡 **Smart Recommendations** (caching, indexing, optimization tips)  
+🚀 **Startup Growth Simulation** (predict when your system will struggle)
+
+### Sample Report:
+
+```
+📊 Scalability Score: 78/100 (Good)
+
+📈 Performance Summary:
+✅ 10 users    → 45ms avg latency
+✅ 100 users   → 120ms avg latency
+⚠️  1000 users  → 380ms avg latency
+❌ 10000 users → 1200ms avg latency
+
+🔴 Detected Bottlenecks:
+❌ /api/orders is slow (1250ms) at 10k users
+⚠️  Database queries without indexes
+
+💡 Recommended Optimizations:
+[HIGH] Add database indexes on frequently queried fields
+[HIGH] Implement caching (Redis/Memcached) for reads
+[MEDIUM] Enable GZIP compression
+[MEDIUM] Use pagination for list endpoints
+
+🚀 Startup Growth Simulation:
+Month 1  →   100 users   ✅ Stable
+Month 6  →  10k users    ✅ Stable
+Month 12 → 100k users    ⚠️  Optimization needed
+```
+
 **See [QUICK_START_v2.md](./QUICK_START_v2.md) for full guide!**
 
 ## P0/P1 Stable Workflow (Recommended)
@@ -133,8 +308,20 @@ backendify generate [path]
 # Generate without auto-connect
 backendify generate --no-auto-connect [path]
 
+# Smart API generation - Detect resources from frontend & auto-generate APIs
+backendify generate-api [path]
+backendify generate-api --no-inject  # Skip frontend code injection
+
 # Run connect pass explicitly
 backendify connect [path]
+
+# Sync backend with frontend changes (update without overwriting custom code)
+backendify sync [path]
+
+# Run scalability & performance tests
+backendify benchmark [path]
+backendify benchmark --levels 10,100,1000 --duration 10
+backendify benchmark --startup-mode
 
 # System health check
 backendify doctor
@@ -300,6 +487,9 @@ npx backendify generate
 - [x] Offline Mode (Rule-Based)
 - [x] Auto-route generation
 - [x] Auto-model generation
+- [x] Smart API Generation (`generate-api`) for frontend-first apps
+- [x] Auto-create backend scaffold in `generate-api` (`.env`, middleware, utils)
+- [x] Avoid false resource detection (e.g. `filteredTodos`, `sortedData`)
 - [x] Testing setup (P0 Regression Suite)
 - [x] Frontend-Backend Auto-Connection (Connect Mode)
 - [x] Advanced URL/Response Parsing Fixes

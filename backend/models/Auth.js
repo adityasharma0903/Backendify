@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
 
-const ProductSchema = new mongoose.Schema(
+const AuthSchema = new mongoose.Schema(
   {
-    title: { type: String, trim: true },
-    price: { type: Number, min: 0, default: 0 },
+    name: { type: String, trim: true },
     description: { type: String, trim: true },
-    category: { type: String, trim: true },
     // Metadata
     isActive: {
       type: Boolean,
@@ -26,24 +24,23 @@ const ProductSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: 'products'
+    collection: 'auth'
   }
 );
 
 // ============================================================
 // INDEXES FOR PERFORMANCE
 // ============================================================
-ProductSchema.index({ createdAt: -1 });
-ProductSchema.index({ updatedAt: -1 });
-ProductSchema.index({ isActive: 1 });
-ProductSchema.index({ isDeleted: 1, createdAt: -1 });
-ProductSchema.index({ category: 1, createdAt: -1 });
+AuthSchema.index({ createdAt: -1 });
+AuthSchema.index({ updatedAt: -1 });
+AuthSchema.index({ isActive: 1 });
+AuthSchema.index({ isDeleted: 1, createdAt: -1 });
 
 // ============================================================
 // HOOKS
 // ============================================================
 
-ProductSchema.pre('save', function(next) {
+AuthSchema.pre('save', function(next) {
   if (this.isModified()) {
     this.metadata.version = (this.metadata.version || 0) + 1;
   }
@@ -54,7 +51,7 @@ ProductSchema.pre('save', function(next) {
 // QUERY HELPERS
 // ============================================================
 
-ProductSchema.query.active = function() {
+AuthSchema.query.active = function() {
   return this.find({ isActive: true, isDeleted: false });
 };
 
@@ -62,14 +59,14 @@ ProductSchema.query.active = function() {
 // STATIC METHODS
 // ============================================================
 
-ProductSchema.statics.findAllActive = async function(options = {}) {
+AuthSchema.statics.findAllActive = async function(options = {}) {
   return this.find({ isActive: true, isDeleted: false })
     .sort(options.sort || { createdAt: -1 })
     .limit(options.limit || 100)
     .skip(options.skip || 0);
 };
 
-ProductSchema.statics.softDelete = async function(id) {
+AuthSchema.statics.softDelete = async function(id) {
   return this.findByIdAndUpdate(
     id,
     { isDeleted: true },
@@ -81,12 +78,12 @@ ProductSchema.statics.softDelete = async function(id) {
 // INSTANCE METHODS
 // ============================================================
 
-ProductSchema.methods.toJSON = function() {
+AuthSchema.methods.toJSON = function() {
   const obj = this.toObject();
   delete obj.__v;
   return obj;
 };
 
-const Product = mongoose.model('Product', ProductSchema);
+const Auth = mongoose.model('Auth', AuthSchema);
 
-export default Product;
+export default Auth;

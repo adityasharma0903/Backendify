@@ -65,6 +65,49 @@ program
   });
 
 program
+  .command('sync [path]')
+  .description('🔄 Sync backend with frontend changes (update backend for new/changed frontend APIs)')
+  .action(async (projectPath) => {
+    try {
+      const { syncBackendWithFrontend } = await import('./lib/modes/sync.js');
+      await syncBackendWithFrontend(projectPath || process.cwd());
+    } catch (error) {
+      console.error(chalk.red('❌ Error:', error.message));
+      process.exit(1);
+    }
+  });
+
+program
+  .command('benchmark [path]')
+  .description('⚡ Run scalability & performance tests on your backend')
+  .option('--levels <levels>', 'Load levels to test (e.g., 10,100,1000)', '10,100,1000,10000')
+  .option('--duration <seconds>', 'Duration of each test in seconds', '10')
+  .option('--startup-mode', 'Simulate startup growth over time')
+  .action(async (projectPath, options) => {
+    try {
+      const { runBenchmark } = await import('./lib/modes/benchmark.js');
+      await runBenchmark(projectPath || process.cwd(), options);
+    } catch (error) {
+      console.error(chalk.red('❌ Error:', error.message));
+      process.exit(1);
+    }
+  });
+
+program
+  .command('generate-api [path]')
+  .description('🎯 Smart API generation - Detect resources from frontend state & generate full-stack APIs')
+  .option('--no-inject', 'Skip frontend code injection')
+  .action(async (projectPath, options) => {
+    try {
+      const { generateSmartAPI } = await import('./lib/modes/generateApi.js');
+      await generateSmartAPI(projectPath || process.cwd(), options);
+    } catch (error) {
+      console.error(chalk.red('❌ Error:', error.message));
+      process.exit(1);
+    }
+  });
+
+program
   .command('doctor')
   .description('🏥 Diagnose your system readiness')
   .action(async () => {

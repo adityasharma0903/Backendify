@@ -3,7 +3,7 @@ import { query, body, param } from 'express-validator';
 import { validateErrors } from '../middleware/validation.js';
 import { PaginationHelper } from '../utils/pagination.js';
 import { ResponseHelper } from '../utils/helper.js';
-import Product from '../models/Product.js';
+import Admin from '../models/Admin.js';
 
 const router = express.Router();
 
@@ -28,20 +28,20 @@ router.get(
 
       // Apply search filter
       if (req.query.search) {
-        query = PaginationHelper.buildSearchQuery(req.query.search, ['title', 'price', 'description']);
+        query = PaginationHelper.buildSearchQuery(req.query.search, ['name', 'description']);
       }
 
       // Apply additional filters
-      const filters = PaginationHelper.buildFilterQuery(req, ['category']);
+      const filters = PaginationHelper.buildFilterQuery(req, []);
       query = { ...query, ...filters };
 
       // Exclude deleted items by default
       query.isDeleted = false;
 
       // Execute paginated query
-      const result = await PaginationHelper.paginate(Product, query, { page, limit, skip, sort });
+      const result = await PaginationHelper.paginate(Admin, query, { page, limit, skip, sort });
 
-      return ResponseHelper.paginated(res, result.data, result.pagination, 'products loaded successfully');
+      return ResponseHelper.paginated(res, result.data, result.pagination, 'admin loaded successfully');
     } catch (error) {
       next(error);
     }
@@ -56,10 +56,10 @@ router.get(
   [param('id').isMongoId(), validateErrors],
   async (req, res, next) => {
     try {
-      const item = await Product.findOne({ _id: req.params.id, isDeleted: false });
+      const item = await Admin.findOne({ _id: req.params.id, isDeleted: false });
 
       if (!item) {
-        return ResponseHelper.notFound(res, 'Product');
+        return ResponseHelper.notFound(res, 'Admin');
       }
 
       return ResponseHelper.success(res, item, 'Item retrieved successfully');
@@ -74,14 +74,13 @@ router.get(
 // ============================================================
 router.post(
   '/',
-  [body('title').isString().isLength({ min: 2, max: 255 }),
-    body('price').optional().isFloat({ min: 0 }), validateErrors],
+  [body('name').isString().isLength({ min: 2, max: 255 }), validateErrors],
   async (req, res, next) => {
     try {
-      const newItem = new Product(req.body);
+      const newItem = new Admin(req.body);
       const saved = await newItem.save();
 
-      return ResponseHelper.success(res, saved, 'Product created successfully', 201);
+      return ResponseHelper.success(res, saved, 'Admin created successfully', 201);
     } catch (error) {
       if (error.name === 'ValidationError') {
         const errors = Object.values(error.errors).map(e => e.message);
@@ -102,23 +101,22 @@ router.put(
   '/:id',
   [
     param('id').isMongoId(),
-    body('title').isString().isLength({ min: 2, max: 255 }),
-    body('price').optional().isFloat({ min: 0 }),
+    body('name').isString().isLength({ min: 2, max: 255 }),
     validateErrors
   ],
   async (req, res, next) => {
     try {
-      const updated = await Product.findByIdAndUpdate(
+      const updated = await Admin.findByIdAndUpdate(
         req.params.id,
         req.body,
         { new: true, runValidators: true }
       );
 
       if (!updated) {
-        return ResponseHelper.notFound(res, 'Product');
+        return ResponseHelper.notFound(res, 'Admin');
       }
 
-      return ResponseHelper.success(res, updated, 'Product updated successfully');
+      return ResponseHelper.success(res, updated, 'Admin updated successfully');
     } catch (error) {
       if (error.name === 'ValidationError') {
         const errors = Object.values(error.errors).map(e => e.message);
@@ -141,14 +139,14 @@ router.patch(
       delete req.body._id;
       delete req.body.createdAt;
 
-      const updated = await Product.findByIdAndUpdate(
+      const updated = await Admin.findByIdAndUpdate(
         req.params.id,
         { $set: req.body },
         { new: true, runValidators: true }
       );
 
       if (!updated) {
-        return ResponseHelper.notFound(res, 'Product');
+        return ResponseHelper.notFound(res, 'Admin');
       }
 
       return ResponseHelper.success(res, updated, 'Partial update successful');
@@ -166,13 +164,13 @@ router.delete(
   [param('id').isMongoId(), validateErrors],
   async (req, res, next) => {
     try {
-      const deleted = await Product.softDelete(req.params.id);
+      const deleted = await Admin.softDelete(req.params.id);
 
       if (!deleted) {
-        return ResponseHelper.notFound(res, 'Product');
+        return ResponseHelper.notFound(res, 'Admin');
       }
 
-      return ResponseHelper.success(res, deleted, 'Product deleted successfully');
+      return ResponseHelper.success(res, deleted, 'Admin deleted successfully');
     } catch (error) {
       next(error);
     }
@@ -189,7 +187,7 @@ router.post(
   [body('items').isArray({ min: 1 }), validateErrors],
   async (req, res, next) => {
     try {
-      const items = await Product.insertMany(req.body.items);
+      const items = await Admin.insertMany(req.body.items);
       return ResponseHelper.success(res, items, `Created ${items.length} items`, 201);
     } catch (error) {
       next(error);
@@ -203,7 +201,7 @@ router.delete(
   [body('ids').isArray({ min: 1 }), validateErrors],
   async (req, res, next) => {
     try {
-      const result = await Product.deleteMany({ _id: { $in: req.body.ids } });
+      const result = await Admin.deleteMany({ _id: { $in: req.body.ids } });
       return ResponseHelper.success(res, result, `Deleted ${result.deletedCount} items`);
     } catch (error) {
       next(error);
@@ -218,8 +216,8 @@ router.get(
   '/stats/summary',
   async (req, res, next) => {
     try {
-      const total = await Product.countDocuments({ isDeleted: false });
-      const recent = await Product.find({ isDeleted: false }).sort({ createdAt: -1 }).limit(5);
+      const total = await Admin.countDocuments({ isDeleted: false });
+      const recent = await Admin.find({ isDeleted: false }).sort({ createdAt: -1 }).limit(5);
 
       return ResponseHelper.success(res, { total, recent }, 'Statistics retrieved');
     } catch (error) {

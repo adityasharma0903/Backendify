@@ -28,11 +28,11 @@ router.get(
 
       // Apply search filter
       if (req.query.search) {
-        query = PaginationHelper.buildSearchQuery(req.query.search, ['name', 'email', 'status']);
+        query = PaginationHelper.buildSearchQuery(req.query.search, ['plan', 'name', 'email']);
       }
 
       // Apply additional filters
-      const filters = PaginationHelper.buildFilterQuery(req, ['status', 'category']);
+      const filters = PaginationHelper.buildFilterQuery(req, []);
       query = { ...query, ...filters };
 
       // Exclude deleted items by default
@@ -41,7 +41,7 @@ router.get(
       // Execute paginated query
       const result = await PaginationHelper.paginate(User, query, { page, limit, skip, sort });
 
-      return ResponseHelper.paginated(res, result.data, result.pagination, 'users loaded successfully');
+      return ResponseHelper.paginated(res, result.data, result.pagination, 'user loaded successfully');
     } catch (error) {
       next(error);
     }
@@ -75,9 +75,7 @@ router.get(
 router.post(
   '/',
   [body('name').isString().isLength({ min: 2, max: 255 }),
-    body('email').isEmail(),
-    body('title').isString().isLength({ min: 2, max: 255 }),
-    body('price').optional().isFloat({ min: 0 }), validateErrors],
+    body('email').isEmail(), validateErrors],
   async (req, res, next) => {
     try {
       const newItem = new User(req.body);
@@ -106,8 +104,6 @@ router.put(
     param('id').isMongoId(),
     body('name').isString().isLength({ min: 2, max: 255 }),
     body('email').isEmail(),
-    body('title').isString().isLength({ min: 2, max: 255 }),
-    body('price').optional().isFloat({ min: 0 }),
     validateErrors
   ],
   async (req, res, next) => {

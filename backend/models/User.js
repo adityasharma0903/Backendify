@@ -8,6 +8,18 @@ const userSchema = new mongoose.Schema({
     trim: true,
     minlength: [2, 'Name must be at least 2 characters']
   },
+  plan: { 
+    type: String, 
+    trim: true 
+  },
+  company: { 
+    type: String, 
+    trim: true 
+  },
+  notifications: { 
+    type: String, 
+    trim: true 
+  },
   email: {
     type: String,
     required: [true, 'Please provide an email'],

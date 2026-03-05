@@ -9,7 +9,7 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/<DB_NAME>';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://adityasharma5672_db_user:aditya_sharma@cctv.ua9ppeq.mongodb.net/';
 
 // ============ MIDDLEWARE ============
 app.use(express.json({ limit: '10mb' }));
