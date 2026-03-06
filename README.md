@@ -16,6 +16,42 @@ Backendify scans your frontend code, detects API calls, and automatically genera
 ✅ **Complete REST APIs** - All endpoints auto-connected to frontend  
 ✅ **Production Ready** - Environment config, graceful shutdown, monitoring ready  
 ✅ **100% Offline** - No AI dependency, works without internet  
+✅ **🆕 Socket.io Chat** - Real-time messaging, presence, typing indicators  
+
+## 🆕 Socket.io Real-Time Chat Support
+
+**Backendify now automatically detects chat/messaging in your frontend and generates a complete real-time backend!**
+
+No matter how big your app is - if it has chat, Backendify generates the backend for it:
+
+- ✅ Complete Socket.io server with JWT authentication
+- ✅ Real-time messaging with delivery & read receipts
+- ✅ Chat models (Message, Conversation) with MongoDB persistence
+- ✅ REST API endpoints for chat history & management
+- ✅ Typing indicators & online presence tracking
+- ✅ Group chats, channels, and direct messaging
+- ✅ Message reactions, editing, and deletion
+- ✅ File sharing support
+
+### How It Works:
+
+```javascript
+// Your frontend has Socket.io?
+import io from 'socket.io-client';
+const socket = io('http://localhost:5000');
+
+socket.emit('message', { text: 'Hello!' });
+socket.on('message', (data) => console.log(data));
+```
+
+Just run `backendify generate` and get:
+- ✅ `backend/socket/index.js` - Complete Socket.io server
+- ✅ `backend/models/Message.js` - Message model with reactions
+- ✅ `backend/models/Conversation.js` - Conversation/room management
+- ✅ `backend/routes/chat.routes.js` - REST API for chat
+- ✅ Integrated Socket.io with your Express server
+
+**👉 See [SOCKET_FEATURE_GUIDE.md](./SOCKET_FEATURE_GUIDE.md) for complete documentation!**  
 
 ## 🎯 Perfect For
 
