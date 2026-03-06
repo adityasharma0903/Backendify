@@ -106,6 +106,22 @@ program
   });
 
 program
+  .command('deploy [path]')
+  .description('🚀 Deploy frontend + backend and auto-connect API URLs')
+  .option('--full', 'Use default stack (Frontend: Vercel, Backend: Railway)')
+  .option('--frontend <provider>', 'Frontend provider: vercel | netlify | cloudflare')
+  .option('--backend <provider>', 'Backend provider: railway | render | flyio | skip')
+  .action(async (projectPath, options) => {
+    try {
+      const { runDeploymentFlow } = await import('./deploy/index.js');
+      await runDeploymentFlow(projectPath || process.cwd(), options);
+    } catch (error) {
+      console.error(chalk.red('❌ Error:', error.message));
+      process.exit(1);
+    }
+  });
+
+program
   .command('generate-api [path]')
   .description('🎯 Smart API generation - Detect resources from frontend state & generate full-stack APIs')
   .option('--no-inject', 'Skip frontend code injection')
@@ -137,4 +153,6 @@ if (!process.argv.slice(2).length) {
   console.log(chalk.gray('    backendify generate --no-auto-connect  # Generate only\n'));
   console.log(chalk.white('  Option 3 (Just connect):'));
   console.log(chalk.gray('    backendify connect [path]              # Auto-connect existing project\n'));
+  console.log(chalk.white('  Option 4 (Deploy live):'));
+  console.log(chalk.gray('    backendify deploy [path]               # Deploy + auto-connect URLs\n'));
 }
