@@ -337,8 +337,42 @@ backend/
 
 ## Commands
 
+### 🆕 Interactive Setup (NEW!)
+
+**Customize your backend with guided interactive questions:**
+
 ```bash
+# Launch interactive setup questionnaire
+backendify generate
+```
+
+This will ask you to select:
+- 📦 **Database**: MongoDB, PostgreSQL, MySQL, or SQLite
+- ⚙️ **Framework**: Express.js, Fastify, or NestJS
+- 🔌 **Realtime Sockets**: Enable/disable Socket.io
+- 🔐 **Authentication**: JWT, OAuth, or Session-based
+- ✅ **Features**: Validation, Caching, Logging, and more
+
+After your selections, Backendify generates a production-ready backend with all the selected features!
+
+**Quick mode (use defaults):**
+```bash
+backendify generate --quick --no-auto-connect
+```
+
+**See [INTERACTIVE_SETUP_GUIDE.md](./INTERACTIVE_SETUP_GUIDE.md) for complete guide!**
+
+---
+
+### All Commands
+
+```bash
+# 🆕 Generate with interactive setup
+backendify generate [path]
+backendify generate --quick --no-auto-connect  # Use defaults
+
 # Generate backend (auto-connect by default)
+# (Uses existing behavior if no interactive selection)
 backendify generate [path]
 
 # Generate without auto-connect

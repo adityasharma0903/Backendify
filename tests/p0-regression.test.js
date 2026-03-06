@@ -5,6 +5,7 @@ import path from 'node:path';
 
 import { buildIRFromDetections } from '../core/ir/buildIR.js';
 import { connectFrontendBackend } from '../lib/modes/connect.js';
+import { generateWithConfig } from '../lib/modes/configBasedGenerator.js';
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -104,9 +105,98 @@ async function testConnectResponseParsingIsIdempotent() {
   }
 }
 
+async function testNestGenerationProducesValidWiring() {
+  const { tempRoot, cleanup } = withTempProject('nestjs-generation');
+
+  try {
+    writeFile(path.join(tempRoot, 'package.json'), JSON.stringify({
+      name: 'fixture-app',
+      private: true
+    }, null, 2));
+
+    writeFile(
+      path.join(tempRoot, 'src', 'pages', 'Products.jsx'),
+      `import axios from 'axios';\n\nexport async function loadProducts() {\n  const response = await axios.get('/api/products');\n  return response.data;\n}\n`
+    );
+
+    await generateWithConfig(tempRoot, {
+      database: 'mongodb',
+      framework: 'nestjs',
+      enableSocket: true,
+      enableAuth: true,
+      authType: 'jwt',
+      enableValidation: true,
+      enableCaching: false,
+      enableLogging: true
+    });
+
+    const appModule = readFile(path.join(tempRoot, 'backend', 'app.module.ts'));
+    const controller = readFile(path.join(tempRoot, 'backend', 'controllers', 'products.controller.ts'));
+    const moduleFile = readFile(path.join(tempRoot, 'backend', 'modules', 'products.module.ts'));
+    const backendPackage = JSON.parse(readFile(path.join(tempRoot, 'backend', 'package.json')));
+
+    assert(!appModule.includes(',,'), 'AppModule imports should not contain malformed double commas');
+    assert(controller.includes("from '../services/products.service'"), 'Controller should import service from services directory');
+    assert(moduleFile.includes("from '../services/products.service'"), 'Module should import service from services directory');
+    assert(moduleFile.includes("from '../controllers/products.controller'"), 'Module should import controller from controllers directory');
+    assert(backendPackage.dependencies['@nestjs/config'], 'NestJS backend should include @nestjs/config dependency');
+    assert(!backendPackage.dependencies.express, 'NestJS backend should not include express runtime dependency directly');
+  } finally {
+    cleanup();
+  }
+}
+
+async function testFrameworkSwitchCleansConflictingEntrypoints() {
+  const { tempRoot, cleanup } = withTempProject('framework-switch-cleanup');
+
+  try {
+    writeFile(path.join(tempRoot, 'package.json'), JSON.stringify({
+      name: 'fixture-app',
+      private: true
+    }, null, 2));
+
+    writeFile(
+      path.join(tempRoot, 'src', 'pages', 'Products.jsx'),
+      `import axios from 'axios';\n\nexport async function loadProducts() {\n  const response = await axios.get('/api/products');\n  return response.data;\n}\n`
+    );
+
+    await generateWithConfig(tempRoot, {
+      database: 'mongodb',
+      framework: 'fastify',
+      enableSocket: true,
+      enableAuth: true,
+      authType: 'jwt',
+      enableValidation: true,
+      enableCaching: false,
+      enableLogging: true
+    });
+
+    assert(fs.existsSync(path.join(tempRoot, 'backend', 'server.js')), 'Fastify generation should create server.js');
+
+    await generateWithConfig(tempRoot, {
+      database: 'mongodb',
+      framework: 'nestjs',
+      enableSocket: true,
+      enableAuth: true,
+      authType: 'jwt',
+      enableValidation: true,
+      enableCaching: false,
+      enableLogging: true
+    });
+
+    assert(fs.existsSync(path.join(tempRoot, 'backend', 'main.ts')), 'NestJS generation should create main.ts');
+    assert(fs.existsSync(path.join(tempRoot, 'backend', 'app.module.ts')), 'NestJS generation should create app.module.ts');
+    assert(!fs.existsSync(path.join(tempRoot, 'backend', 'server.js')), 'NestJS generation should remove stale server.js entrypoint');
+  } finally {
+    cleanup();
+  }
+}
+
 async function run() {
   const tests = [
     testBuildIRFiltersHealthProbe,
+    testNestGenerationProducesValidWiring,
+    testFrameworkSwitchCleansConflictingEntrypoints,
     testConnectRewritesTemplateApiBaseAndPartialMethod,
     testConnectResponseParsingIsIdempotent
   ];

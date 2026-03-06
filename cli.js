@@ -7,6 +7,8 @@ import inquirer from 'inquirer';
 import { offlineMode } from './lib/modes/offline.js';
 import { connectFrontendBackend } from './lib/modes/connect.js';
 import { runDoctor } from './lib/utils/doctor.js';
+import { getInteractiveSetup, displaySetupSummary } from './lib/modes/interactiveSetup.js';
+import { generateWithConfig } from './lib/modes/configBasedGenerator.js';
 
 const program = new Command();
 
@@ -17,35 +19,45 @@ program
 
 program
   .command('generate [path]')
-  .description('🚀 Generate backend (default mode)')
+  .description('🚀 Generate backend with interactive setup')
   .option('--no-auto-connect', 'Skip auto-connect after generation')
+  .option('--quick', 'Use default configuration (no questions)')
   .action(async (projectPath, options) => {
     try {
-      const questions = [
-        {
-          type: 'list',
-          name: 'mode',
-          message: '🔥 Choose Generation Mode:',
-          choices: [
-            { name: '⚙️  Offline (Rule-Based Engine - Fast & Stable)', value: 'offline' },
-            { name: '🤖 Online (AI-Powered Engine - Smart)', value: 'online' }
-          ]
-        }
-      ];
+      const workingPath = projectPath || process.cwd();
+      let config;
 
-      const answers = await inquirer.prompt(questions);
-
-      if (answers.mode === 'offline') {
-        await offlineMode(projectPath || process.cwd());
-        
-        // Auto-connect by default (can be skipped with --no-auto-connect)
-        if (options.autoConnect) {
-          console.log(chalk.cyan('\n🔗 Auto-connecting frontend & backend...\n'));
-          await connectFrontendBackend(projectPath || process.cwd());
-        }
+      if (options.quick) {
+        // Use default configuration
+        config = {
+          database: 'mongodb',
+          framework: 'express',
+          enableSocket: true,
+          enableAuth: true,
+          authType: 'jwt',
+          enableValidation: true,
+          enableCaching: false,
+          enableLogging: true
+        };
+        console.log(chalk.cyan('🚀 Using default configuration...\n'));
       } else {
-        console.log(chalk.yellow('\n🚧 Online Mode Coming Soon!\n'));
+        // Interactive setup
+        config = await getInteractiveSetup();
+        displaySetupSummary(config);
       }
+
+      // Generate backend with config
+      const confirmSpinner = ora('Ready to generate backend...').start();
+      confirmSpinner.succeed('✅ Configuration confirmed\n');
+
+      await generateWithConfig(workingPath, config);
+
+      // Auto-connect if enabled
+      if (options.autoConnect) {
+        console.log(chalk.cyan('🔗 Auto-connecting frontend & backend...\n'));
+        await connectFrontendBackend(workingPath);
+      }
+
     } catch (error) {
       console.error(chalk.red('❌ Error:', error.message));
       process.exit(1);
