@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 
 import { Command } from 'commander';
 import chalk from 'chalk';
@@ -173,6 +173,20 @@ program
   .action(async options => {
     const report = await runDoctor(options);
     process.exitCode = report.exitCode;
+  });
+
+program
+  .command('doctor-ai [path]')
+  .description('AI-powered backend debugger. Monitors a command for errors and generates fixes.')
+  .option('--cmd <command>', 'Command to run and monitor', 'npm run dev')
+  .action(async (projectPath, options) => {
+    try {
+      const { runDoctorAi } = await import('./lib/modes/doctorAi.js');
+      await runDoctorAi(projectPath || process.cwd(), options);
+    } catch (error) {
+      console.error(chalk.red('Error:', error.message));
+      process.exit(1);
+    }
   });
 
 program.parse(process.argv);

@@ -30,6 +30,7 @@
     "commander": "^11.0.0",
     "fast-glob": "^3.3.3",
     "glob": "^10.3.10",
+    "groq-sdk": "^0.37.0",
     "inquirer": "^9.0.0",
     "offbyte": "^1.0.0",
     "ora": "^7.0.1"
