@@ -11,3 +11,6 @@ build/
 *.swo
 package-lock.json
 yarn.lock
+
+test-frontend
+test-frontend-2

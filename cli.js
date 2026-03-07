@@ -28,9 +28,10 @@ program
 
 program
   .command('generate [path]')
-  .description('Generate backend with interactive setup')
+  .description('Complete backend generation with automatic API detection & injection')
   .option('--no-auto-connect', 'Skip auto-connect after generation')
   .option('--quick', 'Use default configuration (no questions)')
+  .option('--no-api-detect', 'Skip automatic API detection from frontend')
   .action(async (projectPath, options) => {
     try {
       const workingPath = projectPath || process.cwd();
@@ -60,6 +61,22 @@ program
       confirmSpinner.succeed('Configuration confirmed\n');
 
       await generateWithConfig(workingPath, config);
+
+      // AUTOMATIC: Smart API detection & generation
+      if (options.apiDetect !== false) {
+        console.log(chalk.cyan('\n\n🎯 Running Smart API Detection...\n'));
+        const { generateSmartAPI } = await import('./lib/modes/generateApi.js');
+        try {
+          await generateSmartAPI(workingPath, { inject: true });
+        } catch (error) {
+          console.error(chalk.red('\nError in Smart API Generation:'));
+          console.error(chalk.red(error.message));
+          if (error.stack) {
+            console.error(chalk.gray(error.stack));
+          }
+          throw error;
+        }
+      }
 
       // Auto-connect if enabled
       if (options.autoConnect) {
