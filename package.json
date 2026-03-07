@@ -1,6 +1,6 @@
 {
   "name": "offbyte",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hybrid Backend Generator - Offline Rule-Based Engine (AI Optional)",
   "main": "index.js",
   "type": "module",
