@@ -23,12 +23,12 @@ function parsePort(value) {
 
 program
   .name('offbyte')
-  .description('âš¡ Hybrid Backend Generator - Offline + AI Powered')
+  .description('Hybrid Backend Generator - Offline + AI Powered')
   .version('1.0.0');
 
 program
   .command('generate [path]')
-  .description('ðŸš€ Generate backend with interactive setup')
+  .description('Generate backend with interactive setup')
   .option('--no-auto-connect', 'Skip auto-connect after generation')
   .option('--quick', 'Use default configuration (no questions)')
   .action(async (projectPath, options) => {
@@ -48,7 +48,7 @@ program
           enableCaching: false,
           enableLogging: true
         };
-        console.log(chalk.cyan('ðŸš€ Using default configuration...\n'));
+        console.log(chalk.cyan('Using default configuration...\n'));
       } else {
         // Interactive setup
         config = await getInteractiveSetup();
@@ -57,50 +57,50 @@ program
 
       // Generate backend with config
       const confirmSpinner = ora('Ready to generate backend...').start();
-      confirmSpinner.succeed('âœ… Configuration confirmed\n');
+      confirmSpinner.succeed('Configuration confirmed\n');
 
       await generateWithConfig(workingPath, config);
 
       // Auto-connect if enabled
       if (options.autoConnect) {
-        console.log(chalk.cyan('ðŸ”— Auto-connecting frontend & backend...\n'));
+        console.log(chalk.cyan('Auto-connecting frontend & backend...\n'));
         await connectFrontendBackend(workingPath);
       }
 
     } catch (error) {
-      console.error(chalk.red('âŒ Error:', error.message));
+      console.error(chalk.red('Error:', error.message));
       process.exit(1);
     }
   });
 
 program
   .command('connect [path]')
-  .description('ðŸ”— Auto-connect frontend & backend (fixes URLs, fields, responses)')
+  .description('Auto-connect frontend & backend (fixes URLs, fields, responses)')
   .action(async (projectPath) => {
     try {
       await connectFrontendBackend(projectPath || process.cwd());
     } catch (error) {
-      console.error(chalk.red('âŒ Error:', error.message));
+      console.error(chalk.red('Error:', error.message));
       process.exit(1);
     }
   });
 
 program
   .command('sync [path]')
-  .description('ðŸ”„ Sync backend with frontend changes (update backend for new/changed frontend APIs)')
+  .description('Sync backend with frontend changes (update backend for new/changed frontend APIs)')
   .action(async (projectPath) => {
     try {
       const { syncBackendWithFrontend } = await import('./lib/modes/sync.js');
       await syncBackendWithFrontend(projectPath || process.cwd());
     } catch (error) {
-      console.error(chalk.red('âŒ Error:', error.message));
+      console.error(chalk.red('Error:', error.message));
       process.exit(1);
     }
   });
 
 program
   .command('benchmark [path]')
-  .description('âš¡ Run scalability & performance tests on your backend')
+  .description('Run scalability & performance tests on your backend')
   .option('--levels <levels>', 'Load levels to test (e.g., 10,100,1000)', '10,100,1000,10000')
   .option('--duration <seconds>', 'Duration of each test in seconds', '10')
   .option('--startup-mode', 'Simulate startup growth over time')
@@ -109,14 +109,14 @@ program
       const { runBenchmark } = await import('./lib/modes/benchmark.js');
       await runBenchmark(projectPath || process.cwd(), options);
     } catch (error) {
-      console.error(chalk.red('âŒ Error:', error.message));
+      console.error(chalk.red('Error:', error.message));
       process.exit(1);
     }
   });
 
 program
   .command('deploy [path]')
-  .description('ðŸš€ Deploy frontend + backend and auto-connect API URLs')
+  .description('Deploy frontend + backend and auto-connect API URLs')
   .option('--full', 'Use default stack (Frontend: Vercel, Backend: Railway)')
   .option('--frontend <provider>', 'Frontend provider: vercel | netlify | cloudflare | skip')
   .option('--backend <provider>', 'Backend provider: railway | render | cloudflare | skip')
@@ -128,28 +128,28 @@ program
       const { runDeploymentFlow } = await import('./deploy/index.js');
       await runDeploymentFlow(projectPath || process.cwd(), options);
     } catch (error) {
-      console.error(chalk.red('âŒ Error:', error.message));
+      console.error(chalk.red('Error:', error.message));
       process.exit(1);
     }
   });
 
 program
   .command('generate-api [path]')
-  .description('ðŸŽ¯ Smart API generation - Detect resources from frontend state & generate full-stack APIs')
+  .description('Smart API generation - Detect resources from frontend state & generate full-stack APIs')
   .option('--no-inject', 'Skip frontend code injection')
   .action(async (projectPath, options) => {
     try {
       const { generateSmartAPI } = await import('./lib/modes/generateApi.js');
       await generateSmartAPI(projectPath || process.cwd(), options);
     } catch (error) {
-      console.error(chalk.red('âŒ Error:', error.message));
+      console.error(chalk.red('Error:', error.message));
       process.exit(1);
     }
   });
 
 program
   .command('doctor')
-  .description('ðŸ¥ Diagnose your system readiness')
+  .description('Diagnose your system readiness')
   .option('--json', 'Output diagnostics in JSON format')
   .option('--no-strict', 'Do not treat warnings as blocking issues')
   .option('--port <number>', 'Port to check for availability (default: 5000)', parsePort, 5000)
@@ -162,7 +162,7 @@ program.parse(process.argv);
 
 if (!process.argv.slice(2).length) {
   program.outputHelp();
-  console.log(chalk.cyan('\nðŸ’¡ Quick Start:\n'));
+  console.log(chalk.cyan('\nQuick Start:\n'));
   console.log(chalk.white('  Option 1 (Recommended):'));
   console.log(chalk.gray('    offbyte generate                    # Generate + Auto-connect\n'));
   console.log(chalk.white('  Option 2 (Skip auto-connect):'));
