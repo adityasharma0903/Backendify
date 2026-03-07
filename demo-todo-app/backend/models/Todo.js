@@ -1,12 +1,10 @@
 import mongoose from 'mongoose';
 
-const UserSchema = new mongoose.Schema(
+const TodoSchema = new mongoose.Schema(
   {
-    name: { type: String, trim: true },
-    price: { type: Number, min: 0, default: 0 },
-    id: { type: String, trim: true },
-    category: { type: String, trim: true },
-    role: { type: String, trim: true },
+    completed: { type: Boolean, default: false, index: true },
+    priority: { type: String, trim: true },
+    title: { type: String, trim: true },
     // Metadata
     isActive: {
       type: Boolean,
@@ -27,24 +25,23 @@ const UserSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    collection: 'users'
+    collection: 'todos'
   }
 );
 
 // ============================================================
 // INDEXES FOR PERFORMANCE
 // ============================================================
-UserSchema.index({ createdAt: -1 });
-UserSchema.index({ updatedAt: -1 });
-UserSchema.index({ isActive: 1 });
-UserSchema.index({ isDeleted: 1, createdAt: -1 });
-UserSchema.index({ category: 1, createdAt: -1 });
+TodoSchema.index({ createdAt: -1 });
+TodoSchema.index({ updatedAt: -1 });
+TodoSchema.index({ isActive: 1 });
+TodoSchema.index({ isDeleted: 1, createdAt: -1 });
 
 // ============================================================
 // HOOKS
 // ============================================================
 
-UserSchema.pre('save', function(next) {
+TodoSchema.pre('save', function(next) {
   if (this.isModified()) {
     this.metadata.version = (this.metadata.version || 0) + 1;
   }
@@ -55,7 +52,7 @@ UserSchema.pre('save', function(next) {
 // QUERY HELPERS
 // ============================================================
 
-UserSchema.query.active = function() {
+TodoSchema.query.active = function() {
   return this.find({ isActive: true, isDeleted: false });
 };
 
@@ -63,14 +60,14 @@ UserSchema.query.active = function() {
 // STATIC METHODS
 // ============================================================
 
-UserSchema.statics.findAllActive = async function(options = {}) {
+TodoSchema.statics.findAllActive = async function(options = {}) {
   return this.find({ isActive: true, isDeleted: false })
     .sort(options.sort || { createdAt: -1 })
     .limit(options.limit || 100)
     .skip(options.skip || 0);
 };
 
-UserSchema.statics.softDelete = async function(id) {
+TodoSchema.statics.softDelete = async function(id) {
   return this.findByIdAndUpdate(
     id,
     { isDeleted: true },
@@ -82,12 +79,12 @@ UserSchema.statics.softDelete = async function(id) {
 // INSTANCE METHODS
 // ============================================================
 
-UserSchema.methods.toJSON = function() {
+TodoSchema.methods.toJSON = function() {
   const obj = this.toObject();
   delete obj.__v;
   return obj;
 };
 
-const User = mongoose.model('User', UserSchema);
+const Todo = mongoose.model('Todo', TodoSchema);
 
-export default User;
+export default Todo;
