@@ -1,5 +1,5 @@
--- ============================================
--- Antyx MYSQL Schema
+﻿-- ============================================
+-- offbyte MYSQL Schema
 -- Generated for MySQL Database
 -- Auto-generated from detected frontend resources
 -- ============================================
@@ -27,3 +27,4 @@ CREATE INDEX idx_users_name ON users(name);
 -- Schema created successfully!
 -- ============================================
 SELECT 'Schema created successfully!' AS Status;
+

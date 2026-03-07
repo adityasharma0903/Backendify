@@ -1,42 +1,42 @@
-# Antyx v2.1 🚀 Full-Stack Development Automation
+﻿# Offbyte v2.1 ðŸš€ Full-Stack Development Automation
 
 **Generate, Deploy, and Scale Production-Ready Backends** - From zero to deployed in minutes!
 
 > **NEW IN v2.1**: 
-> - 🚀 **One-Command Deployment** with auto-install & auto-login
-> - 🔗 **Auto-Connect URLs** - Development & Production environments
-> - ⚡ **Performance Benchmarking** - Load testing & optimization
-> - 🎯 **Smart API Generation** - Frontend-first development
-> - 💬 **Real-time Chat/Socket.io** - Complete websocket backend
+> - ðŸš€ **One-Command Deployment** with auto-install & auto-login
+> - ðŸ”— **Auto-Connect URLs** - Development & Production environments
+> - âš¡ **Performance Benchmarking** - Load testing & optimization
+> - ðŸŽ¯ **Smart API Generation** - Frontend-first development
+> - ðŸ’¬ **Real-time Chat/Socket.io** - Complete websocket backend
 
-## What is Antyx?
+## What is Offbyte?
 
-Antyx scans your frontend code, detects API calls, and automatically generates a **enterprise-grade Express.js + MongoDB backend** with:
+Offbyte scans your frontend code, detects API calls, and automatically generates a **enterprise-grade Express.js + MongoDB backend** with:
 
-✅ **Advanced CRUD Operations** - Pagination, filtering, sorting, search  
-✅ **MongoDB + Mongoose Models** - With validation, hooks, and methods  
-✅ **Security Stack** - Rate limiting, input validation, Helmet.js, JWT auth  
-✅ **Performance** - Compression, caching, database indexes, bulk operations  
-✅ **Professional Middleware** - Error handling, logging, CORS, sanitization  
-✅ **Complete REST APIs** - All endpoints auto-connected to frontend  
-✅ **Production Ready** - Environment config, graceful shutdown, monitoring ready  
-✅ **100% Offline** - No AI dependency, works without internet  
-✅ **🆕 Socket.io Chat** - Real-time messaging, presence, typing indicators  
+âœ… **Advanced CRUD Operations** - Pagination, filtering, sorting, search  
+âœ… **MongoDB + Mongoose Models** - With validation, hooks, and methods  
+âœ… **Security Stack** - Rate limiting, input validation, Helmet.js, JWT auth  
+âœ… **Performance** - Compression, caching, database indexes, bulk operations  
+âœ… **Professional Middleware** - Error handling, logging, CORS, sanitization  
+âœ… **Complete REST APIs** - All endpoints auto-connected to frontend  
+âœ… **Production Ready** - Environment config, graceful shutdown, monitoring ready  
+âœ… **100% Offline** - No AI dependency, works without internet  
+âœ… **ðŸ†• Socket.io Chat** - Real-time messaging, presence, typing indicators  
 
-## 🆕 Socket.io Real-Time Chat Support
+## ðŸ†• Socket.io Real-Time Chat Support
 
-**Antyx now automatically detects chat/messaging in your frontend and generates a complete real-time backend!**
+**Offbyte now automatically detects chat/messaging in your frontend and generates a complete real-time backend!**
 
-No matter how big your app is - if it has chat, Antyx generates the backend for it:
+No matter how big your app is - if it has chat, Offbyte generates the backend for it:
 
-- ✅ Complete Socket.io server with JWT authentication
-- ✅ Real-time messaging with delivery & read receipts
-- ✅ Chat models (Message, Conversation) with MongoDB persistence
-- ✅ REST API endpoints for chat history & management
-- ✅ Typing indicators & online presence tracking
-- ✅ Group chats, channels, and direct messaging
-- ✅ Message reactions, editing, and deletion
-- ✅ File sharing support
+- âœ… Complete Socket.io server with JWT authentication
+- âœ… Real-time messaging with delivery & read receipts
+- âœ… Chat models (Message, Conversation) with MongoDB persistence
+- âœ… REST API endpoints for chat history & management
+- âœ… Typing indicators & online presence tracking
+- âœ… Group chats, channels, and direct messaging
+- âœ… Message reactions, editing, and deletion
+- âœ… File sharing support
 
 ### How It Works:
 
@@ -49,64 +49,64 @@ socket.emit('message', { text: 'Hello!' });
 socket.on('message', (data) => console.log(data));
 ```
 
-Just run `antyx generate` and get:
-- ✅ `backend/socket/index.js` - Complete Socket.io server
-- ✅ `backend/models/Message.js` - Message model with reactions
-- ✅ `backend/models/Conversation.js` - Conversation/room management
-- ✅ `backend/routes/chat.routes.js` - REST API for chat
-- ✅ Integrated Socket.io with your Express server
+Just run `offbyte generate` and get:
+- âœ… `backend/socket/index.js` - Complete Socket.io server
+- âœ… `backend/models/Message.js` - Message model with reactions
+- âœ… `backend/models/Conversation.js` - Conversation/room management
+- âœ… `backend/routes/chat.routes.js` - REST API for chat
+- âœ… Integrated Socket.io with your Express server
 
-## 🎯 Perfect For
+## ðŸŽ¯ Perfect For
 
-- 🛍️ **Ecommerce Apps** - Products, orders, cart, payments
-- 💼 **SaaS Platforms** - Users, subscriptions, analytics
-- 📱 **Mobile Apps** - Full backend with authentication
-- 🏢 **Enterprise Software** - High-performance, scalable
-- 🎮 **Gaming Backends** - Player data, leaderboards, economy
-- 📊 **Dashboards & Analytics** - Data-heavy applications
+- ðŸ›ï¸ **Ecommerce Apps** - Products, orders, cart, payments
+- ðŸ’¼ **SaaS Platforms** - Users, subscriptions, analytics
+- ðŸ“± **Mobile Apps** - Full backend with authentication
+- ðŸ¢ **Enterprise Software** - High-performance, scalable
+- ðŸŽ® **Gaming Backends** - Player data, leaderboards, economy
+- ðŸ“Š **Dashboards & Analytics** - Data-heavy applications
 
 ## Installation
 
 ```bash
-npm install -g antyx
+npm install -g offbyte
 ```
 
 ## Quick Start (2 Commands!)
 
 ```bash
-# 1️⃣ Generate production backend (auto-connect is default)
-antyx generate
+# 1ï¸âƒ£ Generate production backend (auto-connect is default)
+offbyte generate
 
-# 2️⃣ Start backend
+# 2ï¸âƒ£ Start backend
 cd backend && npm run dev
 
-# ✅ Your backend is running on http://localhost:5000
+# âœ… Your backend is running on http://localhost:5000
 ```
 
 ### Complete Workflow:
 
 ```bash
 # Initial generation
-antyx generate
+offbyte generate
 
 # Start backend
 cd backend && npm run dev
 
 # Later: Sync backend when frontend changes
-antyx sync
+offbyte sync
 
 # Test performance & scalability
-antyx benchmark
+offbyte benchmark
 ```
 
-## 🎯 Smart API Generation (NEW!)
+## ðŸŽ¯ Smart API Generation (NEW!)
 
 **Generate full-stack APIs from your frontend code patterns - No API calls needed!**
 
 Perfect for when you're building the frontend first and haven't added API calls yet!
 
 ```bash
-antyx generate-api
+offbyte generate-api
 ```
 
 ### How It Works:
@@ -129,12 +129,12 @@ function ProductList() {
 }
 ```
 
-**After running `antyx generate-api`:**
+**After running `offbyte generate-api`:**
 
-1. ✅ **Detects Resources** - Scans for state variables (`products`, `orders`, `users`)
-2. ✅ **Generates Backend** - Creates models, routes, controllers  
-3. ✅ **Generates API Clients** - Creates `src/api/product.js`, etc.
-4. ✅ **Injects API Calls** - Adds fetch logic to your components
+1. âœ… **Detects Resources** - Scans for state variables (`products`, `orders`, `users`)
+2. âœ… **Generates Backend** - Creates models, routes, controllers  
+3. âœ… **Generates API Clients** - Creates `src/api/product.js`, etc.
+4. âœ… **Injects API Calls** - Adds fetch logic to your components
 
 **Result - Your code is auto-updated:**
 ```jsx
@@ -161,107 +161,107 @@ function ProductList() {
 
 ### Detection Patterns:
 
-Antyx automatically detects resources from:
-- ✅ `const [products, setProducts] = useState([])`
-- ✅ `products.map(product => ...)`
-- ✅ `<input name="productName" />`
-- ✅ `useEffect(() => { /* fetch products */ })`
+Offbyte automatically detects resources from:
+- âœ… `const [products, setProducts] = useState([])`
+- âœ… `products.map(product => ...)`
+- âœ… `<input name="productName" />`
+- âœ… `useEffect(() => { /* fetch products */ })`
 
 ### What Gets Generated:
 
 **Backend** (full CRUD):
-- ✅ `backend/models/Product.js`
-- ✅ `backend/routes/products.routes.js`
-- ✅ `backend/server.js` (auto-updated)
-- ✅ `backend/.env` (auto-generated from template)
-- ✅ `backend/middleware/validation.js` (auto-generated)
-- ✅ `backend/utils/pagination.js` and `backend/utils/helper.js` (auto-generated)
+- âœ… `backend/models/Product.js`
+- âœ… `backend/routes/products.routes.js`
+- âœ… `backend/server.js` (auto-updated)
+- âœ… `backend/.env` (auto-generated from template)
+- âœ… `backend/middleware/validation.js` (auto-generated)
+- âœ… `backend/utils/pagination.js` and `backend/utils/helper.js` (auto-generated)
 
 **Frontend** (API clients):
-- ✅ `src/api/product.js` (getAllProducts, getProductById, createProduct, etc.)
-- ✅ `src/api/index.js`
+- âœ… `src/api/product.js` (getAllProducts, getProductById, createProduct, etc.)
+- âœ… `src/api/index.js`
 
 ### Skip Code Injection:
 
 ```bash
 # Generate APIs without modifying frontend files
-antyx generate-api --no-inject
+offbyte generate-api --no-inject
 ```
 
 Then manually use the generated API clients in your code.
 
-## 🔄 Sync Backend with Frontend Changes
+## ðŸ”„ Sync Backend with Frontend Changes
 
 After initial backend generation, keep it in sync with frontend updates:
 
 ```bash
 # Scan frontend for new APIs and update backend
-antyx sync
+offbyte sync
 
-# ✅ Adds new models/routes for new resources
-# ✅ Adds missing fields to existing models
-# ✅ Preserves custom backend logic
-# ✅ No overwriting of your code!
+# âœ… Adds new models/routes for new resources
+# âœ… Adds missing fields to existing models
+# âœ… Preserves custom backend logic
+# âœ… No overwriting of your code!
 ```
 
-**Use Case:** Added new API calls in frontend? Just run `antyx sync` to update backend automatically!
+**Use Case:** Added new API calls in frontend? Just run `offbyte sync` to update backend automatically!
 
-## ⚡ Performance Testing & Scalability
+## âš¡ Performance Testing & Scalability
 
 Test your backend under load and get optimization recommendations:
 
 ```bash
 # Run scalability tests
-antyx benchmark
+offbyte benchmark
 
 # Custom load levels
-antyx benchmark --levels 10,100,1000,10000
+offbyte benchmark --levels 10,100,1000,10000
 
 # Startup growth simulation
-antyx benchmark --startup-mode
+offbyte benchmark --startup-mode
 ```
 
 ### What You Get:
 
-📊 **Scalability Score** (0-100)  
-📈 **Performance at Different Load Levels** (10, 100, 1k, 10k concurrent users)  
-🔴 **Bottleneck Detection** (slow APIs, database issues)  
-💡 **Smart Recommendations** (caching, indexing, optimization tips)  
-🚀 **Startup Growth Simulation** (predict when your system will struggle)
+ðŸ“Š **Scalability Score** (0-100)  
+ðŸ“ˆ **Performance at Different Load Levels** (10, 100, 1k, 10k concurrent users)  
+ðŸ”´ **Bottleneck Detection** (slow APIs, database issues)  
+ðŸ’¡ **Smart Recommendations** (caching, indexing, optimization tips)  
+ðŸš€ **Startup Growth Simulation** (predict when your system will struggle)
 
 ### Sample Report:
 
 ```
-📊 Scalability Score: 78/100 (Good)
+ðŸ“Š Scalability Score: 78/100 (Good)
 
-📈 Performance Summary:
-✅ 10 users    → 45ms avg latency
-✅ 100 users   → 120ms avg latency
-⚠️  1000 users  → 380ms avg latency
-❌ 10000 users → 1200ms avg latency
+ðŸ“ˆ Performance Summary:
+âœ… 10 users    â†’ 45ms avg latency
+âœ… 100 users   â†’ 120ms avg latency
+âš ï¸  1000 users  â†’ 380ms avg latency
+âŒ 10000 users â†’ 1200ms avg latency
 
-🔴 Detected Bottlenecks:
-❌ /api/orders is slow (1250ms) at 10k users
-⚠️  Database queries without indexes
+ðŸ”´ Detected Bottlenecks:
+âŒ /api/orders is slow (1250ms) at 10k users
+âš ï¸  Database queries without indexes
 
-💡 Recommended Optimizations:
+ðŸ’¡ Recommended Optimizations:
 [HIGH] Add database indexes on frequently queried fields
 [HIGH] Implement caching (Redis/Memcached) for reads
 [MEDIUM] Enable GZIP compression
 [MEDIUM] Use pagination for list endpoints
 
-🚀 Startup Growth Simulation:
-Month 1  →   100 users   ✅ Stable
-Month 6  →  10k users    ✅ Stable
-Month 12 → 100k users    ⚠️  Optimization needed
+ðŸš€ Startup Growth Simulation:
+Month 1  â†’   100 users   âœ… Stable
+Month 6  â†’  10k users    âœ… Stable
+Month 12 â†’ 100k users    âš ï¸  Optimization needed
 ```
 
 ## Stable Workflow (Recommended)
 
 ```bash
 # Generate and connect in one stable flow
-antyx generate
-antyx connect .
+offbyte generate
+offbyte connect .
 
 # Run backend
 cd backend
@@ -274,39 +274,39 @@ Frontend tip:
 
 ## v2.0 Features
 
-### 🔍 Advanced Query Features
-- ✅ **Pagination** - `?page=1&limit=20`
-- ✅ **Search** - `?search=laptop` across multiple fields
-- ✅ **Filtering** - `?status=active&price=100..500`
-- ✅ **Sorting** - `?sort=-price,name`
-- ✅ **Bulk Operations** - Create/update/delete multiple records
+### ðŸ” Advanced Query Features
+- âœ… **Pagination** - `?page=1&limit=20`
+- âœ… **Search** - `?search=laptop` across multiple fields
+- âœ… **Filtering** - `?status=active&price=100..500`
+- âœ… **Sorting** - `?sort=-price,name`
+- âœ… **Bulk Operations** - Create/update/delete multiple records
 
-### 🛡️ Security & Reliability
-- ✅ **Rate Limiting** - Prevent API abuse
-- ✅ **Input Validation** - Express-validator integration
-- ✅ **Data Sanitization** - MongoDB injection prevention
-- ✅ **Security Headers** - Helmet.js
-- ✅ **JWT Authentication** - Secure token-based auth
-- ✅ **CORS Protection** - Configurable allowed origins
+### ðŸ›¡ï¸ Security & Reliability
+- âœ… **Rate Limiting** - Prevent API abuse
+- âœ… **Input Validation** - Express-validator integration
+- âœ… **Data Sanitization** - MongoDB injection prevention
+- âœ… **Security Headers** - Helmet.js
+- âœ… **JWT Authentication** - Secure token-based auth
+- âœ… **CORS Protection** - Configurable allowed origins
 
-### ⚡ Performance Optimization
-- ✅ **Response Compression** - Gzip compression
-- ✅ **Database Indexes** - Optimized queries
-- ✅ **HTTP Caching** - Cache-Control headers
-- ✅ **Connection Pooling** - Efficient DB connections
-- ✅ **Request Logging** - Monitor all traffic
+### âš¡ Performance Optimization
+- âœ… **Response Compression** - Gzip compression
+- âœ… **Database Indexes** - Optimized queries
+- âœ… **HTTP Caching** - Cache-Control headers
+- âœ… **Connection Pooling** - Efficient DB connections
+- âœ… **Request Logging** - Monitor all traffic
 
-### 📊 Advanced Database Layer
-- ✅ **Mongoose Hooks** - Pre/post save, update, delete
-- ✅ **Soft Delete** - Data recovery without hard delete
-- ✅ **Versioning** - Track record changes
-- ✅ **Virtual Fields** - Computed properties
-- ✅ **Query Helpers** - Reusable custom queries
-- ✅ **Static Methods** - Bulk operations, aggregations
+### ðŸ“Š Advanced Database Layer
+- âœ… **Mongoose Hooks** - Pre/post save, update, delete
+- âœ… **Soft Delete** - Data recovery without hard delete
+- âœ… **Versioning** - Track record changes
+- âœ… **Virtual Fields** - Computed properties
+- âœ… **Query Helpers** - Reusable custom queries
+- âœ… **Static Methods** - Bulk operations, aggregations
 
 ## Features
 
-### 🔧 Offline Mode (Default)
+### ðŸ”§ Offline Mode (Default)
 - AI-Powered backend generation
 - More intelligent route mapping
 - Advanced schema inference
@@ -316,133 +316,133 @@ Frontend tip:
 
 ```
 backend/
-├── server.js                 # Express server entry point
-├── package.json              # Dependencies
-├── .env                       # Environment config
-├── routes/                    # API endpoints
-│   ├── users.routes.js
-│   └── products.routes.js
-├── models/                    # Mongoose schemas
-│   ├── User.model.js
-│   └── Product.model.js
-├── middleware/                # Express middleware
-│   ├── errorHandler.js       # Error handling
-│   └── requestLogger.js       # Request logging
-└── config/                    # Configuration files
+â”œâ”€â”€ server.js                 # Express server entry point
+â”œâ”€â”€ package.json              # Dependencies
+â”œâ”€â”€ .env                       # Environment config
+â”œâ”€â”€ routes/                    # API endpoints
+â”‚   â”œâ”€â”€ users.routes.js
+â”‚   â””â”€â”€ products.routes.js
+â”œâ”€â”€ models/                    # Mongoose schemas
+â”‚   â”œâ”€â”€ User.model.js
+â”‚   â””â”€â”€ Product.model.js
+â”œâ”€â”€ middleware/                # Express middleware
+â”‚   â”œâ”€â”€ errorHandler.js       # Error handling
+â”‚   â””â”€â”€ requestLogger.js       # Request logging
+â””â”€â”€ config/                    # Configuration files
 ```
 
 ## Commands
 
-### 🆕 Interactive Setup (NEW!)
+### ðŸ†• Interactive Setup (NEW!)
 
 **Customize your backend with guided interactive questions:**
 
 ```bash
 # Launch interactive setup questionnaire
-antyx generate
+offbyte generate
 ```
 
 This will ask you to select:
-- 📦 **Database**: MongoDB, PostgreSQL, MySQL, or SQLite
-- ⚙️ **Framework**: Express.js, Fastify, or NestJS
-- 🔌 **Realtime Sockets**: Enable/disable Socket.io
-- 🔐 **Authentication**: JWT, OAuth, or Session-based
-- ✅ **Features**: Validation, Caching, Logging, and more
+- ðŸ“¦ **Database**: MongoDB, PostgreSQL, MySQL, or SQLite
+- âš™ï¸ **Framework**: Express.js, Fastify, or NestJS
+- ðŸ”Œ **Realtime Sockets**: Enable/disable Socket.io
+- ðŸ” **Authentication**: JWT, OAuth, or Session-based
+- âœ… **Features**: Validation, Caching, Logging, and more
 
-After your selections, Antyx generates a production-ready backend with all the selected features!
+After your selections, offbyte generates a production-ready backend with all the selected features!
 
 **Quick mode (use defaults):**
 ```bash
-antyx generate --quick --no-auto-connect
+offbyte generate --quick --no-auto-connect
 ```
 
 ---
 
-## 📚 Complete Command Reference
+## ðŸ“š Complete Command Reference
 
-### 1️⃣ `generate` - Backend Generation
+### 1ï¸âƒ£ `generate` - Backend Generation
 **Generate production-ready backend with interactive setup**
 
 ```bash
-antyx generate                            # Interactive setup
-antyx generate --quick                    # Use defaults
-antyx generate --no-auto-connect          # Skip auto-connect
+offbyte generate                            # Interactive setup
+offbyte generate --quick                    # Use defaults
+offbyte generate --no-auto-connect          # Skip auto-connect
 ```
 
 **What it generates:**
-- ✅ Express/NestJS/Fastify server
-- ✅ MongoDB/PostgreSQL/MySQL models
-- ✅ REST API routes with CRUD
-- ✅ JWT/OAuth/Session authentication
-- ✅ Validation, caching, rate limiting
-- ✅ Socket.io for real-time features
-- ✅ Production-ready middleware
-- ✅ Environment configuration
+- âœ… Express/NestJS/Fastify server
+- âœ… MongoDB/PostgreSQL/MySQL models
+- âœ… REST API routes with CRUD
+- âœ… JWT/OAuth/Session authentication
+- âœ… Validation, caching, rate limiting
+- âœ… Socket.io for real-time features
+- âœ… Production-ready middleware
+- âœ… Environment configuration
 
 ---
 
-### 2️⃣ `connect` - Auto-Connect Frontend & Backend
+### 2ï¸âƒ£ `connect` - Auto-Connect Frontend & Backend
 **Automatically fixes API URLs, field names, and response structures**
 
 ```bash
-antyx connect
-antyx connect [path]
+offbyte connect
+offbyte connect [path]
 ```
 
 **What it does:**
-- ✅ Fixes hardcoded API URLs → env variables
-- ✅ Matches field names frontend ↔ backend
-- ✅ Fixes response parsing patterns
-- ✅ Creates `.env` files
-- ✅ Updates frontend components
+- âœ… Fixes hardcoded API URLs â†’ env variables
+- âœ… Matches field names frontend â†” backend
+- âœ… Fixes response parsing patterns
+- âœ… Creates `.env` files
+- âœ… Updates frontend components
 
 ---
 
-### 3️⃣ `sync` - Sync Backend with Frontend Changes
+### 3ï¸âƒ£ `sync` - Sync Backend with Frontend Changes
 **Keep backend up-to-date when frontend changes**
 
 ```bash
-antyx sync
-antyx sync [path]
+offbyte sync
+offbyte sync [path]
 ```
 
 **What it does:**
-- ✅ Detects new API calls in frontend
-- ✅ Generates missing routes/models
-- ✅ Adds missing fields to existing models
-- ✅ Preserves custom backend logic
-- ✅ No overwriting your code
+- âœ… Detects new API calls in frontend
+- âœ… Generates missing routes/models
+- âœ… Adds missing fields to existing models
+- âœ… Preserves custom backend logic
+- âœ… No overwriting your code
 
 ---
 
-### 4️⃣ `benchmark` - Performance & Load Testing
+### 4ï¸âƒ£ `benchmark` - Performance & Load Testing
 **Test backend scalability and get optimization recommendations**
 
 ```bash
-antyx benchmark
-antyx benchmark --levels 10,100,1000,10000
-antyx benchmark --duration 30
-antyx benchmark --startup-mode
+offbyte benchmark
+offbyte benchmark --levels 10,100,1000,10000
+offbyte benchmark --duration 30
+offbyte benchmark --startup-mode
 ```
 
 **What you get:**
-- 📊 Scalability Score (0-100)
-- 📈 Performance at different load levels
-- 🔴 Bottleneck detection
-- 💡 Smart optimization recommendations
-- 🚀 Startup growth simulation
+- ðŸ“Š Scalability Score (0-100)
+- ðŸ“ˆ Performance at different load levels
+- ðŸ”´ Bottleneck detection
+- ðŸ’¡ Smart optimization recommendations
+- ðŸš€ Startup growth simulation
 
 ---
 
-### 5️⃣ `deploy` - One-Command Deployment ⭐ NEW!
+### 5ï¸âƒ£ `deploy` - One-Command Deployment â­ NEW!
 **Deploy frontend + backend with auto-install, auto-login, and auto-connect**
 
 ```bash
-antyx deploy --full                       # Default: Vercel + Railway
-antyx deploy --frontend vercel --backend railway
-antyx deploy --frontend netlify --backend render
-antyx deploy --frontend cloudflare --backend cloudflare
-antyx deploy --frontend vercel --backend skip
+offbyte deploy --full                       # Default: Vercel + Railway
+offbyte deploy --frontend vercel --backend railway
+offbyte deploy --frontend netlify --backend render
+offbyte deploy --frontend cloudflare --backend cloudflare
+offbyte deploy --frontend vercel --backend skip
 ```
 
 **Supported Providers:**
@@ -450,60 +450,60 @@ antyx deploy --frontend vercel --backend skip
 - **Backend:** `railway` | `render` | `cloudflare` | `skip`
 
 **What it does automatically:**
-- ✅ **Auto-installs** missing CLI tools (vercel, netlify, railway, etc.)
-- ✅ **Auto-detects** login status
-- ✅ **Auto-prompts** for login if needed
-- ✅ **Deploys** frontend & backend
-- ✅ **Captures** deployment URLs
-- ✅ **Rewrites** API calls to use environment variables
-- ✅ **Creates** `.env.development` + `.env.production`
-- ✅ **Configures** localhost for dev, deployed URL for prod
+- âœ… **Auto-installs** missing CLI tools (vercel, netlify, railway, etc.)
+- âœ… **Auto-detects** login status
+- âœ… **Auto-prompts** for login if needed
+- âœ… **Deploys** frontend & backend
+- âœ… **Captures** deployment URLs
+- âœ… **Rewrites** API calls to use environment variables
+- âœ… **Creates** `.env.development` + `.env.production`
+- âœ… **Configures** localhost for dev, deployed URL for prod
 
 **Example Flow:**
 ```bash
-$ antyx deploy --full
+$ offbyte deploy --full
 
-⚠️  vercel CLI not found
-📦 Installing vercel...
-✔ vercel CLI installed
+âš ï¸  vercel CLI not found
+ðŸ“¦ Installing vercel...
+âœ” vercel CLI installed
 
-⚠️  Not logged in to Vercel
-🔐 Please login to continue...
-✔ Successfully logged in
+âš ï¸  Not logged in to Vercel
+ðŸ” Please login to continue...
+âœ” Successfully logged in
 
-🚀 Deploying to Vercel...
-✔ Frontend deployed → https://my-app.vercel.app
+ðŸš€ Deploying to Vercel...
+âœ” Frontend deployed â†’ https://my-app.vercel.app
 
-🚀 Deploying to Railway...
-✔ Backend deployed → https://api-production.up.railway.app
+ðŸš€ Deploying to Railway...
+âœ” Backend deployed â†’ https://api-production.up.railway.app
 
-✔ Connecting frontend with backend
+âœ” Connecting frontend with backend
   Updated source files: 5
   Updated env files: 3
 
 App live:
-Frontend → https://my-app.vercel.app
-Backend  → https://api-production.up.railway.app
+Frontend â†’ https://my-app.vercel.app
+Backend  â†’ https://api-production.up.railway.app
 ```
 
 ---
 
-### 6️⃣ `generate-api` - Smart API Generation
+### 6ï¸âƒ£ `generate-api` - Smart API Generation
 **Generate full-stack APIs from frontend state patterns**
 
 ```bash
-antyx generate-api [path]
-antyx generate-api --no-inject  # Skip frontend code injection
+offbyte generate-api [path]
+offbyte generate-api --no-inject  # Skip frontend code injection
 ```
 
 **Perfect for:** Frontend-first development (building UI before backend)
 
 **What it does:**
-- ✅ Scans `useState`, `.map()`, form inputs
-- ✅ Detects resources (products, users, orders, etc.)
-- ✅ Generates backend models + routes
-- ✅ Creates API client functions
-- ✅ Injects API calls into components (optional)
+- âœ… Scans `useState`, `.map()`, form inputs
+- âœ… Detects resources (products, users, orders, etc.)
+- âœ… Generates backend models + routes
+- âœ… Creates API client functions
+- âœ… Injects API calls into components (optional)
 
 **Example:**
 ```javascript
@@ -524,25 +524,25 @@ useEffect(() => {
 
 ---
 
-### 7️⃣ `doctor` - System Health Check
+### 7ï¸âƒ£ `doctor` - System Health Check
 **Diagnose system readiness**
 
 ```bash
-antyx doctor
+offbyte doctor
 ```
 
 **Checks:**
-- ✅ Node.js installed & version
-- ✅ npm ready
-- ✅ MongoDB running
-- ✅ Port availability
-- ✅ CLI tools installed
+- âœ… Node.js installed & version
+- âœ… npm ready
+- âœ… MongoDB running
+- âœ… Port availability
+- âœ… CLI tools installed
 
 
 ## How It Works
 
 ### Step 1: Frontend Scanning
-Antyx scans your project for API calls:
+offbyte scans your project for API calls:
 ```javascript
 // Your frontend code
 fetch('/api/users', {
@@ -554,7 +554,7 @@ fetch('/api/users', {
 ### Step 2: Route Mapping
 Detected endpoint:
 ```
-POST /api/users → Create route + User model
+POST /api/users â†’ Create route + User model
 ```
 
 ### Step 3: Template Injection
@@ -655,14 +655,14 @@ schema.pre('save', async function() {
 ## System Health Check
 
 ```bash
-antyx doctor
+offbyte doctor
 ```
 
 Checks:
-- ✅ Node.js installed
-- ✅ npm ready
-- ✅ MongoDB running
-- ✅ Port 5000 available
+- âœ… Node.js installed
+- âœ… npm ready
+- âœ… MongoDB running
+- âœ… Port 5000 available
 
 ## Use Cases
 
@@ -676,108 +676,108 @@ Checks:
 
 ```bash
 # Show frontend (already built)
-# Run Antyx
-npx antyx generate
+# Run offbyte
+npx offbyte generate
 
 # Choose Offline
-# ✨ Backend ready in 5 seconds
+# âœ¨ Backend ready in 5 seconds
 
 # Delete backend
-# Run Antyx again
+# Run offbyte again
 
 # Choose Online (AI mode)
-# ✨ More advanced backend generated
+# âœ¨ More advanced backend generated
 
-# Judges: 😲
+# Judges: ðŸ˜²
 ```
 
-## ✨ Complete Feature List
+## âœ¨ Complete Feature List
 
-### 🚀 Deployment & DevOps
-- ✅ **One-Command Deployment** - Deploy to Vercel, Netlify, Railway, Render, Cloudflare Pages (frontend + backend)
-- ✅ **Auto-Install CLI Tools** - Automatically installs missing provider CLIs
-- ✅ **Auto-Login Detection** - Checks auth status and prompts for login
-- ✅ **URL Auto-Capture** - Extracts deployment URLs from provider output
-- ✅ **Environment Management** - Creates `.env.development` + `.env.production`
-- ✅ **API URL Rewriting** - Converts hardcoded URLs to environment variables
-- ✅ **Multi-Environment Support** - Localhost for dev, deployed URL for prod
+### ðŸš€ Deployment & DevOps
+- âœ… **One-Command Deployment** - Deploy to Vercel, Netlify, Railway, Render, Cloudflare Pages (frontend + backend)
+- âœ… **Auto-Install CLI Tools** - Automatically installs missing provider CLIs
+- âœ… **Auto-Login Detection** - Checks auth status and prompts for login
+- âœ… **URL Auto-Capture** - Extracts deployment URLs from provider output
+- âœ… **Environment Management** - Creates `.env.development` + `.env.production`
+- âœ… **API URL Rewriting** - Converts hardcoded URLs to environment variables
+- âœ… **Multi-Environment Support** - Localhost for dev, deployed URL for prod
 
-### 🔧 Backend Generation
-- ✅ **Multiple Frameworks** - Express.js, NestJS, Fastify
-- ✅ **Multiple Databases** - MongoDB, PostgreSQL, MySQL, SQLite
-- ✅ **Authentication** - JWT, OAuth, Session-based
-- ✅ **Real-time** - Socket.io with chat, presence, typing indicators
-- ✅ **Interactive Setup** - Guided questionnaire for customization
-- ✅ **Quick Mode** - Default configuration for rapid setup
+### ðŸ”§ Backend Generation
+- âœ… **Multiple Frameworks** - Express.js, NestJS, Fastify
+- âœ… **Multiple Databases** - MongoDB, PostgreSQL, MySQL, SQLite
+- âœ… **Authentication** - JWT, OAuth, Session-based
+- âœ… **Real-time** - Socket.io with chat, presence, typing indicators
+- âœ… **Interactive Setup** - Guided questionnaire for customization
+- âœ… **Quick Mode** - Default configuration for rapid setup
 
-### 🔗 Frontend-Backend Integration
-- ✅ **Auto-Connect** - Fixes URLs, field names, response structures
-- ✅ **Smart Sync** - Updates backend when frontend changes
-- ✅ **API Client Generation** - Creates typed API functions
-- ✅ **Code Injection** - Adds API calls to components (optional)
-- ✅ **Resource Detection** - Scans useState, forms, maps
+### ðŸ”— Frontend-Backend Integration
+- âœ… **Auto-Connect** - Fixes URLs, field names, response structures
+- âœ… **Smart Sync** - Updates backend when frontend changes
+- âœ… **API Client Generation** - Creates typed API functions
+- âœ… **Code Injection** - Adds API calls to components (optional)
+- âœ… **Resource Detection** - Scans useState, forms, maps
 
-### 🔍 Advanced Query Features
-- ✅ **Pagination** - `?page=1&limit=20`
-- ✅ **Search** - `?search=laptop` across multiple fields
-- ✅ **Filtering** - `?status=active&price=100..500`
-- ✅ **Sorting** - `?sort=-price,name`
-- ✅ **Bulk Operations** - Create/update/delete multiple records
+### ðŸ” Advanced Query Features
+- âœ… **Pagination** - `?page=1&limit=20`
+- âœ… **Search** - `?search=laptop` across multiple fields
+- âœ… **Filtering** - `?status=active&price=100..500`
+- âœ… **Sorting** - `?sort=-price,name`
+- âœ… **Bulk Operations** - Create/update/delete multiple records
 
-### 🛡️ Security & Reliability
-- ✅ **Rate Limiting** - Prevent API abuse
-- ✅ **Input Validation** - Express-validator integration
-- ✅ **Data Sanitization** - MongoDB injection prevention
-- ✅ **Security Headers** - Helmet.js
-- ✅ **JWT Authentication** - Secure token-based auth
-- ✅ **CORS Protection** - Configurable allowed origins
+### ðŸ›¡ï¸ Security & Reliability
+- âœ… **Rate Limiting** - Prevent API abuse
+- âœ… **Input Validation** - Express-validator integration
+- âœ… **Data Sanitization** - MongoDB injection prevention
+- âœ… **Security Headers** - Helmet.js
+- âœ… **JWT Authentication** - Secure token-based auth
+- âœ… **CORS Protection** - Configurable allowed origins
 
-### ⚡ Performance & Optimization
-- ✅ **Load Testing** - Test scalability at different levels
-- ✅ **Bottleneck Detection** - Identifies slow endpoints
-- ✅ **Optimization Recommendations** - Smart suggestions
-- ✅ **Response Compression** - Gzip compression
-- ✅ **Database Indexes** - Optimized queries
-- ✅ **HTTP Caching** - Cache-Control headers
-- ✅ **Connection Pooling** - Efficient DB connections
+### âš¡ Performance & Optimization
+- âœ… **Load Testing** - Test scalability at different levels
+- âœ… **Bottleneck Detection** - Identifies slow endpoints
+- âœ… **Optimization Recommendations** - Smart suggestions
+- âœ… **Response Compression** - Gzip compression
+- âœ… **Database Indexes** - Optimized queries
+- âœ… **HTTP Caching** - Cache-Control headers
+- âœ… **Connection Pooling** - Efficient DB connections
 
-### 💬 Real-time Features (Socket.io)
-- ✅ **Chat System** - Direct messages, group chats
-- ✅ **Message Persistence** - MongoDB storage
-- ✅ **Delivery Receipts** - Read/delivered status
-- ✅ **Typing Indicators** - Real-time typing status
-- ✅ **Online Presence** - User online/offline tracking
-- ✅ **Message Reactions** - Emoji reactions
-- ✅ **File Sharing** - Attachment support
+### ðŸ’¬ Real-time Features (Socket.io)
+- âœ… **Chat System** - Direct messages, group chats
+- âœ… **Message Persistence** - MongoDB storage
+- âœ… **Delivery Receipts** - Read/delivered status
+- âœ… **Typing Indicators** - Real-time typing status
+- âœ… **Online Presence** - User online/offline tracking
+- âœ… **Message Reactions** - Emoji reactions
+- âœ… **File Sharing** - Attachment support
 
-### 📊 Advanced Database Features
-- ✅ **Mongoose Hooks** - Pre/post save, update, delete
-- ✅ **Soft Delete** - Data recovery without hard delete
-- ✅ **Versioning** - Track record changes
-- ✅ **Virtual Fields** - Computed properties
-- ✅ **Query Helpers** - Reusable custom queries
-- ✅ **Static Methods** - Bulk operations, aggregations
+### ðŸ“Š Advanced Database Features
+- âœ… **Mongoose Hooks** - Pre/post save, update, delete
+- âœ… **Soft Delete** - Data recovery without hard delete
+- âœ… **Versioning** - Track record changes
+- âœ… **Virtual Fields** - Computed properties
+- âœ… **Query Helpers** - Reusable custom queries
+- âœ… **Static Methods** - Bulk operations, aggregations
 
-### 🔍 Smart Detection
-- ✅ **API Call Detection** - fetch, axios, custom HTTP clients
-- ✅ **Resource Detection** - useState patterns, form inputs
-- ✅ **Socket Detection** - socket.io usage
-- ✅ **Framework Detection** - Vite, CRA, Next.js
-- ✅ **Route Mapping** - Automatic endpoint detection
+### ðŸ” Smart Detection
+- âœ… **API Call Detection** - fetch, axios, custom HTTP clients
+- âœ… **Resource Detection** - useState patterns, form inputs
+- âœ… **Socket Detection** - socket.io usage
+- âœ… **Framework Detection** - Vite, CRA, Next.js
+- âœ… **Route Mapping** - Automatic endpoint detection
 
-### 📦 Production Ready
-- ✅ **Error Handling** - Comprehensive error middleware
-- ✅ **Request Logging** - Built-in logging
-- ✅ **Health Checks** - `/health` endpoint
-- ✅ **Graceful Shutdown** - Proper cleanup
-- ✅ **Environment Config** - `.env` management
-- ✅ **CORS Setup** - Cross-origin handling
+### ðŸ“¦ Production Ready
+- âœ… **Error Handling** - Comprehensive error middleware
+- âœ… **Request Logging** - Built-in logging
+- âœ… **Health Checks** - `/health` endpoint
+- âœ… **Graceful Shutdown** - Proper cleanup
+- âœ… **Environment Config** - `.env` management
+- âœ… **CORS Setup** - Cross-origin handling
 
 ---
 
-## 🔮 Future Scope & Roadmap
+## ðŸ”® Future Scope & Roadmap
 
-### 🎯 Near Term (v2.2 - Q2 2026)
+### ðŸŽ¯ Near Term (v2.2 - Q2 2026)
 - [ ] **TypeScript Support** - Full TS backend generation
 - [ ] **GraphQL Support** - Alternative to REST APIs
 - [ ] **OpenAPI/Swagger** - Auto-generated API documentation
@@ -785,7 +785,7 @@ npx antyx generate
 - [ ] **Middleware Marketplace** - Browse and install middleware plugins
 - [ ] **Custom Templates** - User-defined generation templates
 
-### 🚀 Mid Term (v3.0 - Q3 2026)
+### ðŸš€ Mid Term (v3.0 - Q3 2026)
 - [ ] **Microservices Architecture** - Multi-service generation
 - [ ] **Docker Support** - Containerization with docker-compose
 - [ ] **Kubernetes Config** - K8s deployment files
@@ -795,7 +795,7 @@ npx antyx generate
 - [ ] **Monitoring Stack** - Prometheus + Grafana setup
 - [ ] **Logging Stack** - ELK/EFK stack integration
 
-### 🌟 Long Term (v4.0 - 2027)
+### ðŸŒŸ Long Term (v4.0 - 2027)
 - [ ] **AI-Powered Mode** - Smart schema inference with LLMs
 - [ ] **Multi-Cloud Deploy** - AWS, GCP, Azure support
 - [ ] **Database Options** - DynamoDB, Cassandra, Neo4j
@@ -805,7 +805,7 @@ npx antyx generate
 - [ ] **WebAssembly Support** - High-performance modules
 - [ ] **Blockchain Integration** - Web3 backend support
 
-### 🎨 Developer Experience
+### ðŸŽ¨ Developer Experience
 - [ ] **VS Code Extension** - Integrated development experience
 - [ ] **GUI Dashboard** - Visual configuration interface
 - [ ] **Live Preview** - Real-time backend preview
@@ -814,7 +814,7 @@ npx antyx generate
 - [ ] **Plugin System** - Extensible architecture
 - [ ] **Community Templates** - Share and use templates
 
-### 🔒 Advanced Security
+### ðŸ”’ Advanced Security
 - [ ] **OAuth 2.0 Providers** - Google, GitHub, Microsoft login
 - [ ] **2FA/MFA Support** - Two-factor authentication
 - [ ] **API Key Management** - Automatic key rotation
@@ -822,14 +822,14 @@ npx antyx generate
 - [ ] **Security Scanning** - Automated vulnerability checks
 - [ ] **Compliance Tools** - GDPR, HIPAA helpers
 
-### 📊 Analytics & Monitoring
+### ðŸ“Š Analytics & Monitoring
 - [ ] **APM Integration** - New Relic, Datadog
 - [ ] **Error Tracking** - Sentry integration
 - [ ] **Analytics Dashboard** - Usage statistics
 - [ ] **Cost Monitoring** - Cloud cost tracking
 - [ ] **Performance Profiling** - Detailed bottleneck analysis
 
-### 🌐 Multi-Language Support
+### ðŸŒ Multi-Language Support
 - [ ] **Python Backend** - Flask, Django, FastAPI
 - [ ] **Go Backend** - Gin, Echo, Fiber
 - [ ] **Rust Backend** - Actix, Rocket
@@ -837,26 +837,26 @@ npx antyx generate
 
 ---
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 We welcome contributions! Areas we need help:
-- 🐛 Bug fixes and testing
-- 📝 Documentation improvements
-- 🎨 New templates and providers
-- 🚀 Feature implementation from roadmap
-- 🌍 Internationalization
+- ðŸ› Bug fixes and testing
+- ðŸ“ Documentation improvements
+- ðŸŽ¨ New templates and providers
+- ðŸš€ Feature implementation from roadmap
+- ðŸŒ Internationalization
 
 ---
 
-## 📄 License
+## ðŸ“„ License
 
 MIT License - See LICENSE file for details
 
 ---
 
-## 🙏 Acknowledgments
+## ðŸ™ Acknowledgments
 
-Built with ❤️ for developers who want to ship fast!
+Built with â¤ï¸ for developers who want to ship fast!
 
 ## Troubleshooting
 
@@ -888,4 +888,5 @@ Suggestions and contributions are welcome!
 
 ---
 
-**Made with ❤️ for developers who want to focus on building, not boilerplate.**
+**Made with â¤ï¸ for developers who want to focus on building, not boilerplate.**
+

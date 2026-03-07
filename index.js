@@ -1,10 +1,10 @@
 /**
- * Antyx - Hybrid Backend Generator
+ * Offbyte - Hybrid Backend Generator
  * 
  * Main entry point for programmatic usage
  * 
  * Usage:
- * import { offlineMode, runDoctor } from 'antyx';
+ * import { offlineMode, runDoctor } from 'offbyte';
  * 
  * await offlineMode('/path/to/project');
  * await runDoctor();

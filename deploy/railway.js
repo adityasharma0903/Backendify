@@ -1,4 +1,4 @@
-import { deployWithCommand, runCommandCapture } from './utils.js';
+﻿import { deployWithCommand, runCommandCapture } from './utils.js';
 
 function normalize(value = '') {
   return String(value).trim().toLowerCase();
@@ -24,7 +24,7 @@ function buildDefaultRailwayProjectName() {
     .replace(/[-:TZ]/g, '')
     .slice(0, 12);
 
-  return `backendify-${stamp}`;
+  return `offbyte-${stamp}`;
 }
 
 async function isRailwayProjectLinked(backendPath) {
@@ -212,3 +212,4 @@ export async function deployToRailway(backendPath, options = {}) {
     successLabel: 'Backend deployed on Railway'
   });
 }
+

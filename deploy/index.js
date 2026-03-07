@@ -1,4 +1,4 @@
-import path from 'path';
+﻿import path from 'path';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { deployToVercel } from './vercel.js';
@@ -62,7 +62,7 @@ const BACKEND_ALIASES = {
 export async function runDeploymentFlow(projectPath, options = {}) {
   const resolvedProjectPath = path.resolve(projectPath || process.cwd());
 
-  console.log(chalk.cyan('\nBackendify Deployment\n'));
+  console.log(chalk.cyan('\noffbyte Deployment\n'));
 
   const selection = await resolveProviders(options);
   const frontendPath = detectFrontendPath(resolvedProjectPath);
@@ -209,7 +209,7 @@ function buildDefaultRailwayProjectName() {
     .replace(/[-:TZ]/g, '')
     .slice(0, 12);
 
-  return `backendify-${stamp}`;
+  return `offbyte-${stamp}`;
 }
 
 async function resolveBackendOptions(backendProvider, options = {}, { interactive = false } = {}) {
@@ -293,19 +293,19 @@ function printSummary(result) {
   console.log(chalk.green('\nDeployment complete\n'));
 
   if (result.frontendUrl) {
-    console.log(chalk.green('✔ Frontend deployed ->'), chalk.white(result.frontendUrl));
+    console.log(chalk.green('âœ” Frontend deployed ->'), chalk.white(result.frontendUrl));
   } else {
-    console.log(chalk.yellow('• Frontend deployment skipped'));
+    console.log(chalk.yellow('â€¢ Frontend deployment skipped'));
   }
 
   if (result.backendUrl) {
-    console.log(chalk.green('✔ Backend deployed ->'), chalk.white(result.backendUrl));
+    console.log(chalk.green('âœ” Backend deployed ->'), chalk.white(result.backendUrl));
   } else {
-    console.log(chalk.yellow('• Backend deployment skipped'));
+    console.log(chalk.yellow('â€¢ Backend deployment skipped'));
   }
 
   if (result.connected) {
-    console.log(chalk.green('\n✔ Frontend connected with backend')); 
+    console.log(chalk.green('\nâœ” Frontend connected with backend')); 
     console.log(chalk.gray(`  Updated source files: ${result.connected.updatedFileCount}`));
     console.log(chalk.gray(`  Updated env files: ${result.connected.envFilesUpdated.length}`));
   }
@@ -319,3 +319,4 @@ function printSummary(result) {
   }
   console.log('');
 }
+

@@ -1,11 +1,11 @@
 {
-  "name": "antyx",
+  "name": "offbyte",
   "version": "1.0.0",
   "description": "Hybrid Backend Generator - Offline Rule-Based Engine (AI Optional)",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "antyx": "./cli.js"
+    "offbyte": "./cli.js"
   },
   "scripts": {
     "start": "node cli.js",
@@ -31,6 +31,7 @@
     "fast-glob": "^3.3.3",
     "glob": "^10.3.10",
     "inquirer": "^9.0.0",
+    "offbyte": "^1.0.0",
     "ora": "^7.0.1"
   },
   "devDependencies": {

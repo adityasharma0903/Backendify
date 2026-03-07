@@ -1,13 +1,13 @@
-export function logInfo(message) {
-  console.log(`[Backendify] ${message}`);
+﻿export function logInfo(message) {
+  console.log(`[offbyte] ${message}`);
 }
 
 export function logWarn(message) {
-  console.warn(`[Backendify][warn] ${message}`);
+  console.warn(`[offbyte][warn] ${message}`);
 }
 
 export function logError(message) {
-  console.error(`[Backendify][error] ${message}`);
+  console.error(`[offbyte][error] ${message}`);
 }
 
 export default {
@@ -15,3 +15,4 @@ export default {
   logWarn,
   logError
 };
+

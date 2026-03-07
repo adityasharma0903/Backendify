@@ -1,8 +1,8 @@
-
+﻿
 import { Sequelize } from 'sequelize';
 
 export const sequelize = new Sequelize(
-  process.env.DB_NAME || 'antyx',
+  process.env.DB_NAME || 'offbyte',
   process.env.DB_USER || 'root',
   process.env.DB_PASSWORD || 'password',
   {
@@ -16,10 +16,11 @@ export const sequelize = new Sequelize(
 export async function connectDatabase() {
   try {
     await sequelize.authenticate();
-    console.log('✅ MySQL Connected');
+    console.log('âœ… MySQL Connected');
     await sequelize.sync({ alter: true });
   } catch (error) {
-    console.error('❌ MySQL Connection Error:', error.message);
+    console.error('âŒ MySQL Connection Error:', error.message);
     process.exit(1);
   }
 }
+

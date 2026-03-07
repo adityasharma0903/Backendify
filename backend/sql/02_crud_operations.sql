@@ -1,5 +1,5 @@
--- ============================================
--- Antyx MYSQL CRUD Operations
+﻿-- ============================================
+-- offbyte MYSQL CRUD Operations
 -- All Create, Read, Update, Delete Queries
 -- Ready to use in your application
 -- ============================================
@@ -28,4 +28,5 @@ WHERE id = 1;
 
 -- DELETE: Delete users
 DELETE FROM users WHERE id = 1;
+
 

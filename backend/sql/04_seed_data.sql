@@ -1,5 +1,5 @@
--- ============================================
--- Antyx MYSQL Sample Data
+﻿-- ============================================
+-- offbyte MYSQL Sample Data
 -- Seed data for testing and development
 -- ============================================
 
@@ -15,4 +15,5 @@ INSERT INTO users (name, email, password) VALUES
 ('Sample 3 name', 'user@example.com', 'Sample 3 password'),
 ('Sample 4 name', 'user@example.com', 'Sample 4 password'),
 ('Sample 5 name', 'user@example.com', 'Sample 5 password');
+
 
