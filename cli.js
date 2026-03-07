@@ -12,8 +12,17 @@ import { generateWithConfig } from './lib/modes/configBasedGenerator.js';
 
 const program = new Command();
 
+function parsePort(value) {
+  const port = Number.parseInt(value, 10);
+  if (Number.isNaN(port) || port < 1 || port > 65535) {
+    throw new Error('Port must be a number between 1 and 65535');
+  }
+
+  return port;
+}
+
 program
-  .name('backendify')
+  .name('antyx')
   .description('⚡ Hybrid Backend Generator - Offline + AI Powered')
   .version('1.0.0');
 
@@ -141,8 +150,12 @@ program
 program
   .command('doctor')
   .description('🏥 Diagnose your system readiness')
-  .action(async () => {
-    await runDoctor();
+  .option('--json', 'Output diagnostics in JSON format')
+  .option('--no-strict', 'Do not treat warnings as blocking issues')
+  .option('--port <number>', 'Port to check for availability (default: 5000)', parsePort, 5000)
+  .action(async options => {
+    const report = await runDoctor(options);
+    process.exitCode = report.exitCode;
   });
 
 program.parse(process.argv);
@@ -151,11 +164,11 @@ if (!process.argv.slice(2).length) {
   program.outputHelp();
   console.log(chalk.cyan('\n💡 Quick Start:\n'));
   console.log(chalk.white('  Option 1 (Recommended):'));
-  console.log(chalk.gray('    backendify generate                    # Generate + Auto-connect\n'));
+  console.log(chalk.gray('    antyx generate                    # Generate + Auto-connect\n'));
   console.log(chalk.white('  Option 2 (Skip auto-connect):'));
-  console.log(chalk.gray('    backendify generate --no-auto-connect  # Generate only\n'));
+  console.log(chalk.gray('    antyx generate --no-auto-connect  # Generate only\n'));
   console.log(chalk.white('  Option 3 (Just connect):'));
-  console.log(chalk.gray('    backendify connect [path]              # Auto-connect existing project\n'));
+  console.log(chalk.gray('    antyx connect [path]              # Auto-connect existing project\n'));
   console.log(chalk.white('  Option 4 (Deploy live):'));
-  console.log(chalk.gray('    backendify deploy [path]               # Deploy + auto-connect URLs\n'));
+  console.log(chalk.gray('    antyx deploy [path]               # Deploy + auto-connect URLs\n'));
 }

@@ -1,4 +1,4 @@
-# Backendify v2.1 🚀 Full-Stack Development Automation
+# Antyx v2.1 🚀 Full-Stack Development Automation
 
 **Generate, Deploy, and Scale Production-Ready Backends** - From zero to deployed in minutes!
 
@@ -9,9 +9,9 @@
 > - 🎯 **Smart API Generation** - Frontend-first development
 > - 💬 **Real-time Chat/Socket.io** - Complete websocket backend
 
-## What is Backendify?
+## What is Antyx?
 
-Backendify scans your frontend code, detects API calls, and automatically generates a **enterprise-grade Express.js + MongoDB backend** with:
+Antyx scans your frontend code, detects API calls, and automatically generates a **enterprise-grade Express.js + MongoDB backend** with:
 
 ✅ **Advanced CRUD Operations** - Pagination, filtering, sorting, search  
 ✅ **MongoDB + Mongoose Models** - With validation, hooks, and methods  
@@ -25,9 +25,9 @@ Backendify scans your frontend code, detects API calls, and automatically genera
 
 ## 🆕 Socket.io Real-Time Chat Support
 
-**Backendify now automatically detects chat/messaging in your frontend and generates a complete real-time backend!**
+**Antyx now automatically detects chat/messaging in your frontend and generates a complete real-time backend!**
 
-No matter how big your app is - if it has chat, Backendify generates the backend for it:
+No matter how big your app is - if it has chat, Antyx generates the backend for it:
 
 - ✅ Complete Socket.io server with JWT authentication
 - ✅ Real-time messaging with delivery & read receipts
@@ -49,14 +49,12 @@ socket.emit('message', { text: 'Hello!' });
 socket.on('message', (data) => console.log(data));
 ```
 
-Just run `backendify generate` and get:
+Just run `antyx generate` and get:
 - ✅ `backend/socket/index.js` - Complete Socket.io server
 - ✅ `backend/models/Message.js` - Message model with reactions
 - ✅ `backend/models/Conversation.js` - Conversation/room management
 - ✅ `backend/routes/chat.routes.js` - REST API for chat
 - ✅ Integrated Socket.io with your Express server
-
-**👉 See [SOCKET_FEATURE_GUIDE.md](./SOCKET_FEATURE_GUIDE.md) for complete documentation!**  
 
 ## 🎯 Perfect For
 
@@ -70,14 +68,14 @@ Just run `backendify generate` and get:
 ## Installation
 
 ```bash
-npm install -g backendify
+npm install -g antyx
 ```
 
 ## Quick Start (2 Commands!)
 
 ```bash
 # 1️⃣ Generate production backend (auto-connect is default)
-backendify generate
+antyx generate
 
 # 2️⃣ Start backend
 cd backend && npm run dev
@@ -89,19 +87,17 @@ cd backend && npm run dev
 
 ```bash
 # Initial generation
-backendify generate
+antyx generate
 
 # Start backend
 cd backend && npm run dev
 
 # Later: Sync backend when frontend changes
-backendify sync
+antyx sync
 
 # Test performance & scalability
-backendify benchmark
+antyx benchmark
 ```
-
-**See [QUICK_START_v2.md](./QUICK_START_v2.md) for full guide!**
 
 ## 🎯 Smart API Generation (NEW!)
 
@@ -110,7 +106,7 @@ backendify benchmark
 Perfect for when you're building the frontend first and haven't added API calls yet!
 
 ```bash
-backendify generate-api
+antyx generate-api
 ```
 
 ### How It Works:
@@ -133,7 +129,7 @@ function ProductList() {
 }
 ```
 
-**After running `backendify generate-api`:**
+**After running `antyx generate-api`:**
 
 1. ✅ **Detects Resources** - Scans for state variables (`products`, `orders`, `users`)
 2. ✅ **Generates Backend** - Creates models, routes, controllers  
@@ -165,7 +161,7 @@ function ProductList() {
 
 ### Detection Patterns:
 
-Backendify automatically detects resources from:
+Antyx automatically detects resources from:
 - ✅ `const [products, setProducts] = useState([])`
 - ✅ `products.map(product => ...)`
 - ✅ `<input name="productName" />`
@@ -189,7 +185,7 @@ Backendify automatically detects resources from:
 
 ```bash
 # Generate APIs without modifying frontend files
-backendify generate-api --no-inject
+antyx generate-api --no-inject
 ```
 
 Then manually use the generated API clients in your code.
@@ -200,7 +196,7 @@ After initial backend generation, keep it in sync with frontend updates:
 
 ```bash
 # Scan frontend for new APIs and update backend
-backendify sync
+antyx sync
 
 # ✅ Adds new models/routes for new resources
 # ✅ Adds missing fields to existing models
@@ -208,7 +204,7 @@ backendify sync
 # ✅ No overwriting of your code!
 ```
 
-**Use Case:** Added new API calls in frontend? Just run `backendify sync` to update backend automatically!
+**Use Case:** Added new API calls in frontend? Just run `antyx sync` to update backend automatically!
 
 ## ⚡ Performance Testing & Scalability
 
@@ -216,13 +212,13 @@ Test your backend under load and get optimization recommendations:
 
 ```bash
 # Run scalability tests
-backendify benchmark
+antyx benchmark
 
 # Custom load levels
-backendify benchmark --levels 10,100,1000,10000
+antyx benchmark --levels 10,100,1000,10000
 
 # Startup growth simulation
-backendify benchmark --startup-mode
+antyx benchmark --startup-mode
 ```
 
 ### What You Get:
@@ -260,14 +256,12 @@ Month 6  →  10k users    ✅ Stable
 Month 12 → 100k users    ⚠️  Optimization needed
 ```
 
-**See [QUICK_START_v2.md](./QUICK_START_v2.md) for full guide!**
-
 ## Stable Workflow (Recommended)
 
 ```bash
 # Generate and connect in one stable flow
-backendify generate
-backendify connect .
+antyx generate
+antyx connect .
 
 # Run backend
 cd backend
@@ -345,7 +339,7 @@ backend/
 
 ```bash
 # Launch interactive setup questionnaire
-backendify generate
+antyx generate
 ```
 
 This will ask you to select:
@@ -355,14 +349,12 @@ This will ask you to select:
 - 🔐 **Authentication**: JWT, OAuth, or Session-based
 - ✅ **Features**: Validation, Caching, Logging, and more
 
-After your selections, Backendify generates a production-ready backend with all the selected features!
+After your selections, Antyx generates a production-ready backend with all the selected features!
 
 **Quick mode (use defaults):**
 ```bash
-backendify generate --quick --no-auto-connect
+antyx generate --quick --no-auto-connect
 ```
-
-**See [INTERACTIVE_SETUP_GUIDE.md](./INTERACTIVE_SETUP_GUIDE.md) for complete guide!**
 
 ---
 
@@ -372,9 +364,9 @@ backendify generate --quick --no-auto-connect
 **Generate production-ready backend with interactive setup**
 
 ```bash
-backendify generate                            # Interactive setup
-backendify generate --quick                    # Use defaults
-backendify generate --no-auto-connect          # Skip auto-connect
+antyx generate                            # Interactive setup
+antyx generate --quick                    # Use defaults
+antyx generate --no-auto-connect          # Skip auto-connect
 ```
 
 **What it generates:**
@@ -393,8 +385,8 @@ backendify generate --no-auto-connect          # Skip auto-connect
 **Automatically fixes API URLs, field names, and response structures**
 
 ```bash
-backendify connect
-backendify connect [path]
+antyx connect
+antyx connect [path]
 ```
 
 **What it does:**
@@ -410,8 +402,8 @@ backendify connect [path]
 **Keep backend up-to-date when frontend changes**
 
 ```bash
-backendify sync
-backendify sync [path]
+antyx sync
+antyx sync [path]
 ```
 
 **What it does:**
@@ -427,10 +419,10 @@ backendify sync [path]
 **Test backend scalability and get optimization recommendations**
 
 ```bash
-backendify benchmark
-backendify benchmark --levels 10,100,1000,10000
-backendify benchmark --duration 30
-backendify benchmark --startup-mode
+antyx benchmark
+antyx benchmark --levels 10,100,1000,10000
+antyx benchmark --duration 30
+antyx benchmark --startup-mode
 ```
 
 **What you get:**
@@ -446,11 +438,11 @@ backendify benchmark --startup-mode
 **Deploy frontend + backend with auto-install, auto-login, and auto-connect**
 
 ```bash
-backendify deploy --full                       # Default: Vercel + Railway
-backendify deploy --frontend vercel --backend railway
-backendify deploy --frontend netlify --backend render
-backendify deploy --frontend cloudflare --backend cloudflare
-backendify deploy --frontend vercel --backend skip
+antyx deploy --full                       # Default: Vercel + Railway
+antyx deploy --frontend vercel --backend railway
+antyx deploy --frontend netlify --backend render
+antyx deploy --frontend cloudflare --backend cloudflare
+antyx deploy --frontend vercel --backend skip
 ```
 
 **Supported Providers:**
@@ -469,7 +461,7 @@ backendify deploy --frontend vercel --backend skip
 
 **Example Flow:**
 ```bash
-$ backendify deploy --full
+$ antyx deploy --full
 
 ⚠️  vercel CLI not found
 📦 Installing vercel...
@@ -500,8 +492,8 @@ Backend  → https://api-production.up.railway.app
 **Generate full-stack APIs from frontend state patterns**
 
 ```bash
-backendify generate-api [path]
-backendify generate-api --no-inject  # Skip frontend code injection
+antyx generate-api [path]
+antyx generate-api --no-inject  # Skip frontend code injection
 ```
 
 **Perfect for:** Frontend-first development (building UI before backend)
@@ -536,7 +528,7 @@ useEffect(() => {
 **Diagnose system readiness**
 
 ```bash
-backendify doctor
+antyx doctor
 ```
 
 **Checks:**
@@ -550,7 +542,7 @@ backendify doctor
 ## How It Works
 
 ### Step 1: Frontend Scanning
-Backendify scans your project for API calls:
+Antyx scans your project for API calls:
 ```javascript
 // Your frontend code
 fetch('/api/users', {
@@ -663,7 +655,7 @@ schema.pre('save', async function() {
 ## System Health Check
 
 ```bash
-backendify doctor
+antyx doctor
 ```
 
 Checks:
@@ -684,14 +676,14 @@ Checks:
 
 ```bash
 # Show frontend (already built)
-# Run Backendify
-npx backendify generate
+# Run Antyx
+npx antyx generate
 
 # Choose Offline
 # ✨ Backend ready in 5 seconds
 
 # Delete backend
-# Run Backendify again
+# Run Antyx again
 
 # Choose Online (AI mode)
 # ✨ More advanced backend generated

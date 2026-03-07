@@ -1,10 +1,10 @@
 /**
- * Backendify - Hybrid Backend Generator
+ * Antyx - Hybrid Backend Generator
  * 
  * Main entry point for programmatic usage
  * 
  * Usage:
- * import { offlineMode, runDoctor } from 'backendify';
+ * import { offlineMode, runDoctor } from 'antyx';
  * 
  * await offlineMode('/path/to/project');
  * await runDoctor();

@@ -1,11 +1,11 @@
 {
-  "name": "backendify",
+  "name": "antyx",
   "version": "1.0.0",
   "description": "Hybrid Backend Generator - Offline Rule-Based Engine (AI Optional)",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "backendify": "./cli.js"
+    "antyx": "./cli.js"
   },
   "scripts": {
     "start": "node cli.js",
