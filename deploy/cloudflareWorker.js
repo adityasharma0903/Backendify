@@ -113,6 +113,7 @@ export async function deployToCloudflareWorker(backendPath, options = {}) {
     urlHints: ['pages.dev'],
     loginCheck: checkWranglerLogin,
     loginCommand: { command: 'wrangler', args: ['login'] },
+    commandNeedsTty: true,
     preflight,
     postDeploy: async () => `https://${projectName}.pages.dev`,
     successLabel: 'Backend deployed on Cloudflare Pages'

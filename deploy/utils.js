@@ -97,7 +97,8 @@ export async function deployWithCommand({
   loginCommand,
   preflight,
   postDeploy,
-  successLabel
+  successLabel,
+  commandNeedsTty = false
 }) {
   // Step 1: Ensure CLI is installed (auto-install if needed)
   await ensureCommandAvailable(command, packageName, installHint);
@@ -114,7 +115,8 @@ export async function deployWithCommand({
           command: loginCommand.command,
           args: loginCommand.args || [],
           cwd: process.cwd(),
-          streamOutput: true
+          streamOutput: true,
+          interactive: true
         });
         console.log(chalk.green(`\n✅ Successfully logged in to ${providerName}\n`));
       } catch (error) {
@@ -137,7 +139,8 @@ export async function deployWithCommand({
       command,
       args: resolvedArgs,
       cwd,
-      streamOutput: true
+      streamOutput: true,
+      interactive: commandNeedsTty
     });
 
     const output = `${result.stdout}\n${result.stderr}`;
@@ -174,34 +177,49 @@ export async function deployWithCommand({
   }
 }
 
-export async function runCommandCapture({ command, args = [], cwd, streamOutput = true }) {
+export async function runCommandCapture({ command, args = [], cwd, streamOutput = true, interactive = false }) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {
+    const stdio = interactive ? 'inherit' : ['inherit', 'pipe', 'pipe'];
+
+    // When using shell: true, properly quote arguments that contain spaces
+    const quotedArgs = args.map((arg) => {
+      if (typeof arg !== 'string') return String(arg);
+      if (arg.includes(' ')) {
+        return `"${arg.replace(/"/g, '\\"')}"`;
+      }
+      return arg;
+    });
+
+    const child = spawn(command, quotedArgs, {
       cwd,
       shell: true,
       env: process.env,
       windowsHide: false,
-      stdio: ['inherit', 'pipe', 'pipe']
+      stdio
     });
 
     let stdout = '';
     let stderr = '';
 
-    child.stdout.on('data', (chunk) => {
-      const text = chunk.toString();
-      stdout += text;
-      if (streamOutput) {
-        process.stdout.write(chalk.gray(text));
-      }
-    });
+    if (child.stdout) {
+      child.stdout.on('data', (chunk) => {
+        const text = chunk.toString();
+        stdout += text;
+        if (streamOutput) {
+          process.stdout.write(chalk.gray(text));
+        }
+      });
+    }
 
-    child.stderr.on('data', (chunk) => {
-      const text = chunk.toString();
-      stderr += text;
-      if (streamOutput) {
-        process.stderr.write(chalk.gray(text));
-      }
-    });
+    if (child.stderr) {
+      child.stderr.on('data', (chunk) => {
+        const text = chunk.toString();
+        stderr += text;
+        if (streamOutput) {
+          process.stderr.write(chalk.gray(text));
+        }
+      });
+    }
 
     child.on('error', (error) => {
       reject(new Error(`Failed to run command "${command}": ${error.message}`));
@@ -214,7 +232,9 @@ export async function runCommandCapture({ command, args = [], cwd, streamOutput 
       }
 
       const combined = `${stdout}\n${stderr}`.trim();
-      const preview = combined.split('\n').slice(-12).join('\n');
+      const preview = combined
+        ? combined.split('\n').slice(-12).join('\n')
+        : 'No captured output (interactive command mode).';
 
       reject(
         new Error(
