@@ -18,7 +18,7 @@ function normalizeRoute(route) {
   if (!route) return null;
   const cleaned = route.split('?')[0];
   if (cleaned.startsWith('http://') || cleaned.startsWith('https://')) {
-    const index = cleaned.indexOf('/api/');
+    const index = cleaned.indexOf(`/api/`);
     if (index >= 0) return cleaned.substring(index);
   }
   return cleaned.startsWith('/') ? cleaned : `/${cleaned}`;
@@ -55,7 +55,7 @@ export function detectAxios(ast, file) {
 
         const route = normalizeRoute(getStringValue(node.arguments[0]));
         if (!route) return;
-        if (!route.includes('/api') && !route.startsWith('/')) return;
+        if (!route.includes(`/api`) && !route.startsWith('/')) return;
 
         const method = methodName.toUpperCase();
         const dataArgIndex = methodName === 'get' ? -1 : 1;
@@ -82,7 +82,7 @@ export function detectAxios(ast, file) {
 
         const route = normalizeRoute(getStringValue(urlProp?.value));
         if (!route) return;
-        if (!route.includes('/api') && !route.startsWith('/')) return;
+        if (!route.includes(`/api`) && !route.startsWith('/')) return;
 
         const method = (getStringValue(methodProp?.value) || 'GET').toUpperCase();
         const fields = extractFieldsFromNode(dataProp?.value);

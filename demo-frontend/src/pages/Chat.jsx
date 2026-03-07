@@ -14,7 +14,7 @@ function Chat() {
 
   // Initialize Socket.io
   useEffect(() => {
-    const newSocket = io('http://localhost:5000', {
+    const newSocket = io(process.env.REACT_APP_API_URL, {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,

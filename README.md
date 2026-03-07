@@ -449,13 +449,13 @@ backendify benchmark --startup-mode
 backendify deploy --full                       # Default: Vercel + Railway
 backendify deploy --frontend vercel --backend railway
 backendify deploy --frontend netlify --backend render
-backendify deploy --frontend cloudflare --backend flyio
+backendify deploy --frontend cloudflare --backend cloudflare
 backendify deploy --frontend vercel --backend skip
 ```
 
 **Supported Providers:**
 - **Frontend:** `vercel` | `netlify` | `cloudflare`
-- **Backend:** `railway` | `render` | `flyio` | `skip`
+- **Backend:** `railway` | `render` | `cloudflare` | `skip`
 
 **What it does automatically:**
 - ✅ **Auto-installs** missing CLI tools (vercel, netlify, railway, etc.)
@@ -702,7 +702,7 @@ npx backendify generate
 ## ✨ Complete Feature List
 
 ### 🚀 Deployment & DevOps
-- ✅ **One-Command Deployment** - Deploy to Vercel, Netlify, Railway, Render, Fly.io, Cloudflare
+- ✅ **One-Command Deployment** - Deploy to Vercel, Netlify, Railway, Render, Cloudflare Pages (frontend + backend)
 - ✅ **Auto-Install CLI Tools** - Automatically installs missing provider CLIs
 - ✅ **Auto-Login Detection** - Checks auth status and prompts for login
 - ✅ **URL Auto-Capture** - Extracts deployment URLs from provider output

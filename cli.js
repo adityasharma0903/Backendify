@@ -109,8 +109,11 @@ program
   .command('deploy [path]')
   .description('🚀 Deploy frontend + backend and auto-connect API URLs')
   .option('--full', 'Use default stack (Frontend: Vercel, Backend: Railway)')
-  .option('--frontend <provider>', 'Frontend provider: vercel | netlify | cloudflare')
-  .option('--backend <provider>', 'Backend provider: railway | render | flyio | skip')
+  .option('--frontend <provider>', 'Frontend provider: vercel | netlify | cloudflare | skip')
+  .option('--backend <provider>', 'Backend provider: railway | render | cloudflare | skip')
+  .option('--backend-service-id <id>', 'Backend service ID where required (e.g., Render)')
+  .option('--backend-project-name <name>', 'Backend project name where supported (e.g., Railway, Cloudflare Pages)')
+  .option('--backend-service-name <name>', 'Backend service name where supported (e.g., Railway)')
   .action(async (projectPath, options) => {
     try {
       const { runDeploymentFlow } = await import('./deploy/index.js');

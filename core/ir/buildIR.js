@@ -25,7 +25,7 @@ function isHealthProbeCall(call, resourceName) {
   if (method !== 'GET') return false;
 
   const route = normalizeRoute(call.route || '');
-  return route === '/health' || route === '/api/health';
+  return route === '/health' || route === `/api/health`;
 }
 
 export function buildIRFromDetections(apiCalls = [], forms = []) {

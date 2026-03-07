@@ -59,8 +59,8 @@ app.use(cors({
 }));
 
 // Rate Limiting
-app.use('/api/auth', authLimiter);
-app.use('/api', globalLimiter);
+app.use(`/api/auth`, authLimiter);
+app.use(`/api`, globalLimiter);
 
 // Data Sanitization
 app.use(sanitizeData);
@@ -87,7 +87,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.get('/api/health', (req, res) => {
+app.get(`/api/health`, (req, res) => {
   res.status(200).json({
     status: 'OK',
     uptime: process.uptime(),
@@ -98,7 +98,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.get('/api', (req, res) => {
+app.get(`/api`, (req, res) => {
   res.status(200).json({
     success: true,
     message: 'Backend API Server',
@@ -106,13 +106,13 @@ app.get('/api', (req, res) => {
     environment: NODE_ENV,
     endpoints: {
       health: '/health',
-      documentation: '/api/docs',
-      status: '/api/status'
+      documentation: `/api/docs`,
+      status: `/api/status`
     }
   });
 });
 
-app.get('/api/status', (req, res) => {
+app.get(`/api/status`, (req, res) => {
   res.status(200).json({
     success: true,
     status: 'running',
@@ -129,7 +129,7 @@ app.get('/api/status', (req, res) => {
 // ============================================
 // IMPORTANT: API URL Configuration
 // ============================================
-// Routes are registered with /api prefix (e.g., app.use('/api/users', usersRoutes))
+// Routes are registered with /api prefix (e.g., app.use(`/api/users`, usersRoutes))
 // Frontend VITE_API_URL should be: http://localhost:5000 (WITHOUT /api)
 // Frontend will then call: http://localhost:5000/api/users
 // 

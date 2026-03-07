@@ -6,33 +6,35 @@ import { deployToNetlify } from './netlify.js';
 import { deployToCloudflare } from './cloudflare.js';
 import { deployToRailway } from './railway.js';
 import { deployToRender } from './render.js';
-import { deployToFlyIO } from './flyio.js';
+import { deployToCloudflareWorker } from './cloudflareWorker.js';
 import { autoConnectDeployment } from './connect.js';
 import { detectBackendPath, detectFrontendPath, normalizeProviderKey } from './utils.js';
 
 const FRONTEND_PROVIDER_CHOICES = [
   { name: 'Vercel', value: 'vercel' },
   { name: 'Netlify', value: 'netlify' },
-  { name: 'Cloudflare Pages', value: 'cloudflare' }
+  { name: 'Cloudflare Pages', value: 'cloudflare' },
+  { name: 'Skip frontend', value: 'skip' }
 ];
 
 const BACKEND_PROVIDER_CHOICES = [
   { name: 'Railway', value: 'railway' },
   { name: 'Render', value: 'render' },
-  { name: 'Fly.io', value: 'flyio' },
+  { name: 'Cloudflare Pages (Free)', value: 'cloudflare' },
   { name: 'Skip backend', value: 'skip' }
 ];
 
 const FRONTEND_DEPLOYERS = {
   vercel: deployToVercel,
   netlify: deployToNetlify,
-  cloudflare: deployToCloudflare
+  cloudflare: deployToCloudflare,
+  skip: null
 };
 
 const BACKEND_DEPLOYERS = {
   railway: deployToRailway,
   render: deployToRender,
-  flyio: deployToFlyIO,
+  cloudflare: deployToCloudflareWorker,
   skip: null
 };
 
@@ -40,14 +42,19 @@ const FRONTEND_ALIASES = {
   vercel: 'vercel',
   netlify: 'netlify',
   cloudflare: 'cloudflare',
-  cloudflarepages: 'cloudflare'
+  cloudflarepages: 'cloudflare',
+  skip: 'skip',
+  skipfrontend: 'skip'
 };
 
 const BACKEND_ALIASES = {
   railway: 'railway',
   render: 'render',
-  flyio: 'flyio',
-  fly: 'flyio',
+  cloudflare: 'cloudflare',
+  cloudflareworker: 'cloudflare',
+  cloudflareworkers: 'cloudflare',
+  worker: 'cloudflare',
+  workers: 'cloudflare',
   skip: 'skip',
   skipbackend: 'skip'
 };
@@ -69,7 +76,7 @@ export async function runDeploymentFlow(projectPath, options = {}) {
     connected: null
   };
 
-  if (selection.frontend) {
+  if (selection.frontend && selection.frontend !== 'skip') {
     const deployFrontend = FRONTEND_DEPLOYERS[selection.frontend];
     if (!deployFrontend) {
       throw new Error(`Unsupported frontend provider: ${selection.frontend}`);
@@ -89,7 +96,7 @@ export async function runDeploymentFlow(projectPath, options = {}) {
     result.backendUrl = backendDeployResult.url;
   }
 
-  if (result.backendUrl) {
+  if (result.backendUrl && selection.frontend && selection.frontend !== 'skip') {
     result.connected = autoConnectDeployment({
       projectPath: resolvedProjectPath,
       frontendPath,
@@ -103,12 +110,14 @@ export async function runDeploymentFlow(projectPath, options = {}) {
 async function resolveProviders(options) {
   const normalizedFrontend = normalizeFrontendProvider(options.frontend);
   const normalizedBackend = normalizeBackendProvider(options.backend);
+  const fallbackBackend = normalizedBackend || 'railway';
 
   if (options.full) {
     return {
       frontend: normalizedFrontend || 'vercel',
-      backend: normalizedBackend || 'railway',
-      frontendOptions: await resolveFrontendOptions(normalizedFrontend || 'vercel')
+      backend: fallbackBackend,
+      frontendOptions: await resolveFrontendOptions(normalizedFrontend || 'vercel'),
+      backendOptions: await resolveBackendOptions(fallbackBackend, options, { interactive: false })
     };
   }
 
@@ -146,7 +155,8 @@ async function resolveProviders(options) {
   return {
     frontend,
     backend,
-    frontendOptions: await resolveFrontendOptions(frontend)
+    frontendOptions: await resolveFrontendOptions(frontend),
+    backendOptions: await resolveBackendOptions(backend, options, { interactive: true })
   };
 }
 
@@ -168,7 +178,7 @@ function normalizeBackendProvider(value) {
   const provider = BACKEND_ALIASES[normalized];
 
   if (!provider) {
-    throw new Error(`Invalid backend provider: ${value}. Use railway | render | flyio | skip`);
+    throw new Error(`Invalid backend provider: ${value}. Use railway | render | cloudflare | skip`);
   }
 
   return provider;
@@ -193,11 +203,99 @@ async function resolveFrontendOptions(frontendProvider) {
   };
 }
 
+function buildDefaultRailwayProjectName() {
+  const stamp = new Date()
+    .toISOString()
+    .replace(/[-:TZ]/g, '')
+    .slice(0, 12);
+
+  return `backendify-${stamp}`;
+}
+
+async function resolveBackendOptions(backendProvider, options = {}, { interactive = false } = {}) {
+  if (!backendProvider || backendProvider === 'skip') {
+    return {};
+  }
+
+  const cliServiceId = String(options.backendServiceId || process.env.RENDER_SERVICE_ID || '').trim();
+
+  if (backendProvider === 'render') {
+    if (cliServiceId) {
+      return { serviceId: cliServiceId };
+    }
+
+    if (!interactive) {
+      return {};
+    }
+
+    const answers = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'serviceId',
+        message: 'Render service ID (required)',
+        validate: (value) => String(value || '').trim().length > 0 || 'Service ID is required',
+        filter: (value) => String(value || '').trim()
+      }
+    ]);
+
+    return { serviceId: answers.serviceId };
+  }
+
+  if (backendProvider === 'cloudflare') {
+    const cliProjectName = String(options.backendProjectName || process.env.CLOUDFLARE_PAGES_PROJECT || '').trim();
+    return cliProjectName ? { projectName: cliProjectName } : {};
+  }
+
+  if (backendProvider !== 'railway') {
+    return {};
+  }
+
+  const cliProjectName = String(options.backendProjectName || '').trim();
+  const cliServiceName = String(options.backendServiceName || '').trim();
+  if (cliProjectName) {
+    return {
+      projectName: cliProjectName,
+      ...(cliServiceName ? { serviceName: cliServiceName } : {})
+    };
+  }
+
+  if (!interactive) {
+    return {
+      projectName: buildDefaultRailwayProjectName(),
+      ...(cliServiceName ? { serviceName: cliServiceName } : {})
+    };
+  }
+
+  const answers = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'projectName',
+      message: 'Railway project name (auto-created if missing)',
+      default: buildDefaultRailwayProjectName(),
+      filter: (value) => String(value || '').trim()
+    },
+    {
+      type: 'input',
+      name: 'serviceName',
+      message: 'Railway service name (optional, leave blank for auto)',
+      default: cliServiceName,
+      filter: (value) => String(value || '').trim()
+    }
+  ]);
+
+  return {
+    projectName: answers.projectName || buildDefaultRailwayProjectName(),
+    ...(answers.serviceName ? { serviceName: answers.serviceName } : {})
+  };
+}
+
 function printSummary(result) {
   console.log(chalk.green('\nDeployment complete\n'));
 
   if (result.frontendUrl) {
     console.log(chalk.green('✔ Frontend deployed ->'), chalk.white(result.frontendUrl));
+  } else {
+    console.log(chalk.yellow('• Frontend deployment skipped'));
   }
 
   if (result.backendUrl) {

@@ -18,7 +18,7 @@ app.use(requestLogger);
 
 // ============ ROUTES ============
 // Routes should be registered with /api prefix in __ROUTES__
-// Example: app.use('/api/users', usersRoutes);
+// Example: app.use(`/api/users`, usersRoutes);
 // 
 // Frontend Configuration:
 //   ✅ CORRECT:   VITE_API_URL = http://localhost:5000
@@ -35,7 +35,7 @@ const healthHandler = (req, res) => {
 };
 
 app.get('/health', healthHandler);
-app.get('/api/health', healthHandler);
+app.get(`/api/health`, healthHandler);
 
 // ============ ERROR HANDLER ============
 app.use(errorHandler);

@@ -32,7 +32,7 @@ const typingUsers = new Map();
 export function initializeSocket(httpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || 'http://localhost:3000',
+      origin: process.env.CLIENT_URL || process.env.REACT_APP_API_URL,
       credentials: true
     },
     pingTimeout: 60000,

@@ -34,7 +34,7 @@ function App() {
     
     // Call logout API
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
+      await fetch(`/api/auth/logout`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -134,7 +134,7 @@ function LoginPage({ onLogin, onSwitchToSignup }) {
     setError('');
 
     try {
-      const API_BASE_URL = 'http://localhost:3001/api/v1';
+      const API_BASE_URL = `/api/v1`;
       const response = await fetch(`${API_BASE_URL}/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -201,7 +201,7 @@ function SignupPage({ onSignup, onSwitchToLogin }) {
     setLoading(true);
 
     try {
-      const API_BASE_URL = 'http://localhost:3001/api/v1';
+      const API_BASE_URL = `/api/v1`;
       const { confirmPassword, ...signupData } = formData;
       
       const response = await fetch(`${API_BASE_URL}/users/signup`, {
@@ -305,7 +305,7 @@ function AdminDashboard() {
   const fetchDashboardStats = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/dashboard`, {
+      const response = await fetch(`/api/admin/dashboard`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -346,7 +346,7 @@ function UserDashboard({ user }) {
   const fetchUsageStats = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/usage`, {
+      const response = await fetch(`/api/user/usage`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -386,7 +386,7 @@ function UsersManagement() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/users`, {
+      const response = await fetch(`/api/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -403,7 +403,7 @@ function UsersManagement() {
   const updateUserStatus = async (userId, status) => {
     try {
       const token = localStorage.getItem('authToken');
-      await fetch(`${process.env.REACT_APP_API_URL}/api/admin/users/${userId}/status`, {
+      await fetch(`/api/admin/users/${userId}/status`, {
         method: 'PUT',
         headers: { 
           'Authorization': `Bearer ${token}`,
@@ -458,7 +458,7 @@ function SubscriptionsManagement() {
   const fetchSubscriptions = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/subscriptions`, {
+      const response = await fetch(`/api/admin/subscriptions`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -508,7 +508,7 @@ function Analytics() {
   const fetchAnalytics = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/analytics`, {
+      const response = await fetch(`/api/admin/analytics`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -544,7 +544,7 @@ function MySubscription({ user }) {
   const fetchSubscription = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/subscription`, {
+      const response = await fetch(`/api/user/subscription`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -561,7 +561,7 @@ function MySubscription({ user }) {
   const upgradePlan = async (newPlan) => {
     try {
       const token = localStorage.getItem('authToken');
-      await fetch(`${process.env.REACT_APP_API_URL}/api/user/subscription/upgrade`, {
+      await fetch(`/api/user/subscription/upgrade`, {
         method: 'POST',
         headers: { 
           'Authorization': `Bearer ${token}`,
@@ -610,7 +610,7 @@ function Billing({ user }) {
   const fetchInvoices = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/invoices`, {
+      const response = await fetch(`/api/user/invoices`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -660,7 +660,7 @@ function Settings({ user }) {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem('authToken');
-      await fetch(`${process.env.REACT_APP_API_URL}/api/user/settings`, {
+      await fetch(`/api/user/settings`, {
         method: 'PUT',
         headers: { 
           'Authorization': `Bearer ${token}`,

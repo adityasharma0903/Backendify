@@ -94,7 +94,7 @@ function normalizeRoute(route) {
   if (!route) return null;
   const cleaned = route.split('?')[0];
   if (cleaned.startsWith('http://') || cleaned.startsWith('https://')) {
-    const index = cleaned.indexOf('/api/');
+    const index = cleaned.indexOf(`/api/`);
     if (index >= 0) return cleaned.substring(index);
   }
   return cleaned.startsWith('/') ? cleaned : `/${cleaned}`;
@@ -123,7 +123,7 @@ export function detectFetch(ast, file) {
       const rawRoute = getRoute(node.arguments[0]);
       const route = normalizeRoute(rawRoute);
       if (!route) return;
-      if (!route.includes('/api') && !route.startsWith('/')) return;
+      if (!route.includes(`/api`) && !route.startsWith('/')) return;
 
       const configNode = node.arguments[1];
       const method = getMethodFromFetchConfig(configNode);

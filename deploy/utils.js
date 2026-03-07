@@ -61,12 +61,19 @@ export async function autoInstallCLI(packageName, command) {
   }
 }
 
-export async function ensureCommandAvailable(command, packageName) {
+export async function ensureCommandAvailable(command, packageName, installHint) {
   const isAvailable = await isCommandAvailable(command);
   
   if (!isAvailable) {
     console.log(chalk.yellow(`⚠️  ${command} CLI not found`));
-    
+
+    if (!packageName) {
+      const hint = installHint
+        ? ` ${installHint}`
+        : ` Please install "${command}" and ensure it is available in PATH.`;
+      throw new Error(`${command} CLI not found.${hint}`);
+    }
+
     // Auto-install
     await autoInstallCLI(packageName, command);
     
@@ -85,13 +92,15 @@ export async function deployWithCommand({
   cwd,
   urlHints = [],
   packageName,
+  installHint,
   loginCheck,
   loginCommand,
   preflight,
+  postDeploy,
   successLabel
 }) {
   // Step 1: Ensure CLI is installed (auto-install if needed)
-  await ensureCommandAvailable(command, packageName);
+  await ensureCommandAvailable(command, packageName, installHint);
 
   // Step 2: Check login status and prompt if needed
   if (typeof loginCheck === 'function') {
@@ -122,16 +131,29 @@ export async function deployWithCommand({
   const spinner = ora(`Deploying to ${providerName}...`).start();
 
   try {
+    const resolvedArgs = typeof args === 'function' ? await args() : args;
     spinner.stop();
     const result = await runCommandCapture({
       command,
-      args,
+      args: resolvedArgs,
       cwd,
       streamOutput: true
     });
 
     const output = `${result.stdout}\n${result.stderr}`;
-    const deployedUrl = extractUrl(output, urlHints);
+    let deployedUrl = null;
+
+    if (typeof postDeploy === 'function') {
+      try {
+        deployedUrl = await postDeploy({ cwd, output, command, args: resolvedArgs, providerName });
+      } catch {
+        // Fall back to parsing command output when post-deploy URL lookup fails.
+      }
+    }
+
+    if (!deployedUrl) {
+      deployedUrl = extractUrl(output, urlHints);
+    }
 
     if (!deployedUrl) {
       throw new Error(
