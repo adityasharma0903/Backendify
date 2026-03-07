@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 
 import { Command } from 'commander';
 import chalk from 'chalk';
@@ -67,7 +67,7 @@ program
         console.log(chalk.cyan('\n\n🎯 Running Smart API Detection...\n'));
         const { generateSmartAPI } = await import('./lib/modes/generateApi.js');
         try {
-          await generateSmartAPI(workingPath, { inject: true });
+          await generateSmartAPI(workingPath, { inject: true, config });
         } catch (error) {
           console.error(chalk.red('\nError in Smart API Generation:'));
           console.error(chalk.red(error.message));
